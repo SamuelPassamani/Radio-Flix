@@ -1,3 +1,101 @@
+
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-home",
+      "description": "A vibrant concert scene with a large crowd and stage lights.",
+      "imageUrl": "https://picsum.photos/seed/1/1920/1080",
+      "imageHint": "concert crowd"
+    },
+    {
+      "id": "news-1",
+      "description": "A musician playing a guitar on stage.",
+      "imageUrl": "https://picsum.photos/seed/2/400/300",
+      "imageHint": "guitarist stage"
+    },
+    {
+      "id": "news-2",
+      "description": "An old-school radio receiver.",
+      "imageUrl": "https://picsum.photos/seed/3/400/300",
+      "imageHint": "vintage radio"
+    },
+    {
+      "id": "news-3",
+      "description": "A sound mixing board in a recording studio.",
+      "imageUrl": "https://picsum.photos/seed/4/400/300",
+      "imageHint": "mixing board"
+    },
+    {
+      "id": "news-4",
+      "description": "A crowd of people at a music festival.",
+      "imageUrl": "https://picsum.photos/seed/5/400/300",
+      "imageHint": "music festival"
+    },
+    {
+      "id": "news-5",
+      "description": "Vinyl records on a shelf.",
+      "imageUrl": "https://picsum.photos/seed/6/400/300",
+      "imageHint": "vinyl records"
+    },
+    {
+      "id": "news-6",
+      "description": "Headphones resting on a laptop.",
+      "imageUrl": "https://picsum.photos/seed/7/400/300",
+      "imageHint": "headphones laptop"
+    },
+    {
+      "id": "gallery-1",
+      "description": "A fan holding up a sign at a concert.",
+      "imageUrl": "https://picsum.photos/seed/101/600/400",
+      "imageHint": "concert fan"
+    },
+    {
+      "id": "gallery-2",
+      "description": "A group of friends smiling at a festival.",
+      "imageUrl": "https://picsum.photos/seed/102/600/400",
+      "imageHint": "festival friends"
+    },
+    {
+      "id": "gallery-3",
+      "description": "Radio host speaking into a microphone.",
+      "imageUrl": "https://picsum.photos/seed/103/600/400",
+      "imageHint": "radio host"
+    },
+    {
+      "id": "gallery-4",
+      "description": "Behind the scenes at the radio station.",
+      "imageUrl": "https://picsum.photos/seed/104/600/400",
+      "imageHint": "radio studio"
+    },
+    {
+      "id": "gallery-5",
+      "description": "A local band performing live in the studio.",
+      "imageUrl": "https://picsum.photos/seed/105/600/400",
+      "imageHint": "band performance"
+    },
+    {
+      "id": "gallery-6",
+      "description": "Listeners participating in an outdoor station event.",
+      "imageUrl": "https://picsum.photos/seed/106/600/400",
+      "imageHint": "station event"
+    },
+    {
+      "id": "gallery-7",
+      "description": "Close-up of a turntable playing a record.",
+      "imageUrl": "https://picsum.photos/seed/107/600/400",
+      "imageHint": "turntable record"
+    },
+    {
+      "id": "gallery-8",
+      "description": "The station's van at a community fair.",
+      "imageUrl": "https://picsum.photos/seed/108/600/400",
+      "imageHint": "promo van"
+    },
+    {
+      "id": "gallery-9",
+      "description": "An interview with a famous artist.",
+      "imageUrl": "https://picsum.photos/seed/109/600/400",
+      "imageHint": "artist interview"
+    }
+  ]
 }
