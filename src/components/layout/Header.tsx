@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { Menu, Radio, Rss, Twitter, Facebook, Instagram } from "lucide-react";
+import { Menu, Radio, Twitter, Facebook, Instagram } from "lucide-react";
 import { Logo } from "./Logo";
 
 const navLinks = [
@@ -28,8 +28,8 @@ export function Header() {
     <header className="sticky top-0 z-40 bg-card/95 backdrop-blur-sm">
       <div className="container mx-auto flex h-24 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-3" prefetch={false}>
-          <Logo className="h-16 w-16 text-primary" />
-          <span className="font-headline text-3xl font-bold hidden sm:inline">Sound PRO</span>
+          <Logo className="h-16 w-auto" />
+          <span className="font-headline text-3xl font-bold hidden sm:inline">Rádio Flix</span>
         </Link>
         
         <nav className="hidden lg:flex items-center justify-center gap-1 absolute left-1/2 -translate-x-1/2">
@@ -73,8 +73,8 @@ export function Header() {
                 <div className="flex flex-col h-full">
                     <div className="p-6">
                         <Link href="/" className="flex items-center gap-2 mb-8" onClick={() => setIsMobileMenuOpen(false)}>
-                            <Logo className="h-8 w-8 text-primary" />
-                            <span className="font-headline text-2xl font-bold">Sound PRO</span>
+                            <Logo className="h-8 w-auto" />
+                            <span className="font-headline text-2xl font-bold">Rádio Flix</span>
                         </Link>
                         <nav className="flex flex-col gap-4">
                         {navLinks.map((link) => (
