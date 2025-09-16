@@ -32,6 +32,7 @@ export default function Home() {
             src={heroImage.imageUrl}
             alt={heroImage.description}
             fill
+            sizes="100vw"
             className="object-cover"
             data-ai-hint={heroImage.imageHint}
             priority
@@ -83,6 +84,7 @@ export default function Home() {
                             src={articleImage.imageUrl}
                             alt={articleImage.description}
                             fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                             className="object-cover"
                             data-ai-hint={articleImage.imageHint}
                             />
@@ -119,6 +121,7 @@ export default function Home() {
                                 src={image.imageUrl}
                                 alt={image.description}
                                 fill
+                                sizes="(max-width: 1024px) 33vw, 10vw"
                                 className="object-cover"
                                 data-ai-hint={image.imageHint}
                                 />
@@ -151,6 +154,7 @@ export default function Home() {
                                         src={articleImage.imageUrl}
                                         alt={article.title}
                                         fill
+                                        sizes="(max-width: 768px) 100vw, 33vw"
                                         className="object-cover"
                                         data-ai-hint={articleImage.imageHint}
                                     />

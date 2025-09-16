@@ -2,16 +2,17 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { PlayCircle, PauseCircle, Volume2, VolumeX, ListMusic, Mail, Music, X, Radio } from "lucide-react";
+import { Play, Pause, Volume2, VolumeX, ListMusic, Mail, Music, X, Radio } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import Image from "next/image";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 // URLs e constantes da API
 const STREAM_URL = "https://stream.zeno.fm/cbzw2rbebfkuv";
 const API_URL = `https://twj.es/free/?url=${STREAM_URL}`;
 const FALLBACK_API_URL = `https://twj.es/metadata/?url=${STREAM_URL}`;
-const DEFAULT_COVER_ART = "/img/cover.png"; // Usando uma imagem padrão local
+const DEFAULT_COVER_ART = "/img/cover.png";
 
 interface SongData {
   title: string;
@@ -26,10 +27,8 @@ interface HistoryItem {
   albumArtUrl: string;
 }
 
-// Cache simples para a API do iTunes
 const cache: { [key: string]: any } = {};
 
-// Função para buscar dados da API do iTunes com cache
 const getDataFromITunes = async (artist: string, title: string): Promise<{ art: string; cover: string }> => {
   const text = `${artist} - ${title}`;
   const cacheKey = text.toLowerCase();
@@ -56,13 +55,11 @@ const getDataFromITunes = async (artist: string, title: string): Promise<{ art: 
     console.error("Error fetching from iTunes API:", error);
   }
 
-  // Retorno padrão em caso de falha ou nenhum resultado
   return { art: DEFAULT_COVER_ART, cover: DEFAULT_COVER_ART };
 };
 
-
 export function RightSidebarPlayer() {
-  const [isPlaying, setIsPlaying] = useState(true); // Inicia como true para autoplay
+  const [isPlaying, setIsPlaying] = useState(true);
   const [volume, setVolume] = useState(80);
   const [isMuted, setIsMuted] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
@@ -76,7 +73,6 @@ export function RightSidebarPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const currentSongTitleRef = useRef<string | null>(null);
 
-  // Efeito para buscar os dados da música periodicamente
   useEffect(() => {
     const fetchStreamingData = async (url: string): Promise<any> => {
       try {
@@ -91,23 +87,13 @@ export function RightSidebarPlayer() {
 
     const updateSongData = async () => {
       let data = await fetchStreamingData(API_URL) || await fetchStreamingData(FALLBACK_API_URL);
-
       if (data) {
         const songTitle = data.songtitle || (typeof data.song === "object" ? data.song.title : data.song) || "Música Desconhecida";
         const artistName = (typeof data.artist === "object" ? data.artist.title : data.artist) || "Artista Desconhecido";
-        
         if (songTitle !== currentSongTitleRef.current) {
           currentSongTitleRef.current = songTitle;
           const { art, cover } = await getDataFromITunes(artistName, songTitle);
-          
-          setSongData({
-            title: songTitle,
-            artist: artistName,
-            albumArtUrl: art,
-            bgImageUrl: cover,
-          });
-
-          // Atualiza o histórico
+          setSongData({ title: songTitle, artist: artistName, albumArtUrl: art, bgImageUrl: cover });
           const historyArray: any[] = data.song_history || data.history || [];
           const formattedHistory = await Promise.all(
             historyArray.slice(0, 4).map(async (item: any) => {
@@ -121,14 +107,11 @@ export function RightSidebarPlayer() {
         }
       }
     };
-
     updateSongData();
     const interval = setInterval(updateSongData, 10000);
-
     return () => clearInterval(interval);
   }, []);
 
-  // Efeito para controlar o volume do áudio
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = isMuted ? 0 : volume / 100;
@@ -148,14 +131,10 @@ export function RightSidebarPlayer() {
 
   const handleVolumeChange = (value: number[]) => {
     setVolume(value[0]);
-    if (value[0] > 0) {
-      setIsMuted(false);
-    }
+    if (value[0] > 0) setIsMuted(false);
   };
 
-  const toggleMute = () => {
-    setIsMuted(!isMuted);
-  };
+  const toggleMute = () => setIsMuted(!isMuted);
 
   return (
     <>
@@ -179,56 +158,51 @@ export function RightSidebarPlayer() {
           {isOpen ? <X className="h-6 w-6" /> : <Radio className="h-6 w-6" />}
         </Button>
 
-        {/* Seção da Imagem Superior com Fundo Desfocado */}
-        <div className="relative h-[45%] w-full flex-shrink-0">
-          <div className="absolute inset-0">
+        <div className="relative flex-shrink-0 flex flex-col items-center justify-center p-8 space-y-4">
+          <div className="relative w-48 h-48 group rounded-full overflow-hidden shadow-2xl">
             <Image
-              src={songData.bgImageUrl}
-              alt="Fundo da capa do álbum"
+              src={songData.albumArtUrl}
+              alt="Capa do álbum"
               fill
-              className="object-cover blur-2xl opacity-30"
+              className={cn(
+                "object-cover",
+                isPlaying && "animate-spin-slow"
+              )}
               unoptimized
             />
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={togglePlay} 
+              className="absolute inset-0 m-auto h-16 w-16 bg-black/50 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm hover:bg-black/60"
+            >
+              {isPlaying ? <Pause className="h-8 w-8" /> : <Play className="h-8 w-8" />}
+            </Button>
           </div>
-          <div className="relative z-10 flex flex-col items-center justify-end h-full p-4 text-center">
-            <div className="relative w-48 h-48 rounded-lg overflow-hidden shadow-2xl transition-all duration-500 ease-in-out">
-              <Image
-                src={songData.albumArtUrl}
-                alt="Capa do álbum"
-                fill
-                className="object-cover"
-                unoptimized
+
+          <div className="text-center w-full">
+            <h2 className="text-2xl font-bold truncate" title={songData.title}>{songData.title}</h2>
+            <p className="text-muted-foreground truncate" title={songData.artist}>{songData.artist}</p>
+          </div>
+
+          <div className="w-full max-w-[250px] space-y-2">
+             <div className="flex items-center gap-2 w-full">
+              <Button variant="ghost" size="icon" onClick={toggleMute} className="h-8 w-8">
+                {isMuted || volume === 0 ? <VolumeX size={20} /> : <Volume2 size={20} />}
+              </Button>
+              <Slider
+                value={[isMuted ? 0 : volume]}
+                max={100}
+                step={1}
+                onValueChange={handleVolumeChange}
               />
             </div>
-            <div className="mt-4 w-full">
-              <h2 className="text-2xl font-bold truncate" title={songData.title}>{songData.title}</h2>
-              <p className="text-muted-foreground truncate" title={songData.artist}>{songData.artist}</p>
-            </div>
+            <span className="text-center block text-xs text-muted-foreground">Volume {isMuted ? 0 : volume}%</span>
           </div>
         </div>
 
-        {/* Controles do Player */}
-        <div className="flex flex-col items-center justify-center -mt-8 z-20 flex-shrink-0">
-          <Button variant="ghost" size="icon" onClick={togglePlay} className="rounded-full h-16 w-16 bg-card/80 hover:bg-card/90 backdrop-blur-sm">
-            {isPlaying ? <PauseCircle className="h-14 w-14 text-primary" /> : <PlayCircle className="h-14 w-14 text-primary" />}
-          </Button>
-          <div className="flex items-center gap-2 w-full max-w-[220px] mt-2">
-            <Button variant="ghost" size="icon" onClick={toggleMute}>
-              {isMuted || volume === 0 ? <VolumeX size={20} /> : <Volume2 size={20} />}
-            </Button>
-            <Slider
-              value={[isMuted ? 0 : volume]}
-              max={100}
-              step={1}
-              onValueChange={handleVolumeChange}
-            />
-          </div>
-           <span className="text-xs text-muted-foreground mt-1">Volume {isMuted ? 0 : volume}%</span>
-        </div>
-
-        {/* Histórico de Músicas */}
         <div className="flex-grow flex flex-col p-4 pt-2 overflow-hidden">
-          <h3 className="font-headline text-md uppercase tracking-wider text-center my-4 flex-shrink-0">Histórico</h3>
+          <h3 className="font-headline text-md uppercase tracking-wider text-center my-2 flex-shrink-0">Histórico</h3>
           <div className="flex-grow overflow-y-auto pr-2 space-y-3">
             {history.length > 0 ? history.map((track, index) => (
               <div key={index} className="flex items-center gap-3 bg-muted/40 p-2 rounded-md hover:bg-muted/80 transition-colors">
@@ -246,7 +220,6 @@ export function RightSidebarPlayer() {
           </div>
         </div>
 
-        {/* Links Inferiores */}
         <div className="p-4 border-t flex-shrink-0">
           <div className="flex justify-around items-center">
             <Button variant="ghost" className="flex flex-col h-auto" asChild>
