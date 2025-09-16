@@ -63,10 +63,10 @@ export function RightSidebarPlayer() {
         <Button 
             variant="primary" 
             size="icon" 
-            className="absolute top-5 -left-12 rounded-r-none"
+            className="absolute top-5 -left-12 rounded-r-none rounded-l-md h-10 w-10 transition-all duration-300 hover:scale-105"
             onClick={() => setIsOpen(!isOpen)}
         >
-            {isOpen ? <X/> : <Radio />}
+            {isOpen ? <X className="h-6 w-6"/> : <Radio className="h-6 w-6" />}
         </Button>
         
         {/* Top Image Section */}
