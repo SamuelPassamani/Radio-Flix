@@ -9,7 +9,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 // URLs e constantes da API
-const STREAM_URL = "https://stream.zeno.fm/cbzw2rbebfkuv";
+const STREAM_URL = "https://cast2.hoost.com.br:20000/stream";
 const API_URL = `https://twj.es/free/?url=${STREAM_URL}`;
 const FALLBACK_API_URL = `https://twj.es/metadata/?url=${STREAM_URL}`;
 const DEFAULT_COVER_ART = "/img/cover.png";
@@ -126,6 +126,7 @@ export function RightSidebarPlayer() {
         audioRef.current.load();
         audioRef.current.play().catch(e => console.error("Play error:", e));
       }
+      setIsPlaying(!isPlaying);
     }
   };
 
