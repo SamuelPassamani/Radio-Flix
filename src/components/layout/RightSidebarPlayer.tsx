@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { PlayCircle, PauseCircle, Volume2, VolumeX, ListMusic, Mail, ChevronsRight, ChevronsLeft, Music } from "lucide-react";
+import { PlayCircle, PauseCircle, Volume2, VolumeX, ListMusic, Mail, ChevronsRight, ChevronsLeft, Music, X, Radio } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
 import Image from "next/image";
@@ -66,7 +66,7 @@ export function RightSidebarPlayer() {
             className="absolute top-5 -left-12 rounded-r-none"
             onClick={() => setIsOpen(!isOpen)}
         >
-            {isOpen ? <ChevronsRight/> : <ChevronsLeft />}
+            {isOpen ? <X/> : <Radio />}
         </Button>
         
         {/* Top Image Section */}
@@ -78,6 +78,7 @@ export function RightSidebarPlayer() {
                       alt="Album art background"
                       fill
                       className="object-cover blur-2xl opacity-30"
+                      data-ai-hint="abstract crimson"
                   />
                 )}
             </div>
@@ -90,6 +91,7 @@ export function RightSidebarPlayer() {
                            alt="Album art"
                            fill
                            className="object-cover"
+                           data-ai-hint="abstract crimson"
                        />
                      )}
                  </div>
