@@ -127,3 +127,55 @@ export const schedule = [
     ],
   },
 ];
+
+
+export const podcasts = [
+  {
+    id: 1,
+    title: "The Daily Riff",
+    host: "Rockin' Rebecca",
+    date: "July 22, 2024",
+    description: "Daily deep dives into the greatest rock anthems of all time. Today: The story behind 'Stairway to Heaven'.",
+    imageId: "podcast-1"
+  },
+  {
+    id: 2,
+    title: "Indie Insights",
+    host: "Alex Chen",
+    date: "July 21, 2024",
+    description: "Interviews with the hottest new independent artists. This week, we chat with 'Glass Animals' about their new album.",
+    imageId: "podcast-2"
+  },
+  {
+    id: 3,
+    title: "Beat Makers",
+    host: "DJ Fresh",
+    date: "July 20, 2024",
+    description: "A look into the world of music production. We break down the techniques behind hip-hop's most iconic beats.",
+    imageId: "podcast-3"
+  },
+  {
+    id: 4,
+    title: "Conectar Conversations",
+    host: "Maria Silva",
+    date: "July 19, 2024",
+    description: "Our flagship weekly show, discussing the latest in music news, culture, and what's happening at the station.",
+    imageId: "podcast-4"
+  },
+    {
+    id: 5,
+    title: "Vinyl Vibes",
+    host: "Old School Oscar",
+    date: "July 18, 2024",
+    description: "Exploring the warm, rich sound of vinyl. Each episode features a classic album played in its entirety.",
+    imageId: "podcast-5"
+  },
+  {
+    id: 6,
+    title: "Electronic Echoes",
+    host: "Synthwave Sarah",
+    date: "July 17, 2024",
+    description: "A journey through the world of electronic music, from ambient to techno. Featuring guest mixes and artist spotlights.",
+    imageId: "podcast-6"
+  },
+];

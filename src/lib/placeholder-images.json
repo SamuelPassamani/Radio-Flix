@@ -3,9 +3,9 @@
   "placeholderImages": [
     {
       "id": "hero-home",
-      "description": "A vibrant concert scene with a large crowd and stage lights.",
+      "description": "A man in a leather jacket and sunglasses listening to headphones against a red background.",
       "imageUrl": "https://picsum.photos/seed/1/1920/1080",
-      "imageHint": "concert crowd"
+      "imageHint": "man headphones"
     },
     {
       "id": "news-1",
@@ -96,6 +96,22 @@
       "description": "An interview with a famous artist.",
       "imageUrl": "https://picsum.photos/seed/109/600/400",
       "imageHint": "artist interview"
-    }
+    },
+    { "id": "song-1", "description": "Abstract crimson waves", "imageUrl": "https://picsum.photos/seed/201/200/200", "imageHint": "abstract crimson" },
+    { "id": "song-2", "description": "City street at midnight", "imageUrl": "https://picsum.photos/seed/202/200/200", "imageHint": "city midnight" },
+    { "id": "song-3", "description": "Rain on a window pane", "imageUrl": "https://picsum.photos/seed/203/200/200", "imageHint": "rain window" },
+    { "id": "song-4", "description": "Geometric heart shape", "imageUrl": "https://picsum.photos/seed/204/200/200", "imageHint": "geometric heart" },
+    { "id": "song-5", "description": "Circuit board pattern", "imageUrl": "https://picsum.photos/seed/205/200/200", "imageHint": "circuit board" },
+    { "id": "song-6", "description": "A starry night sky.", "imageUrl": "https://picsum.photos/seed/206/200/200", "imageHint": "starry sky" },
+    { "id": "song-7", "description": "A magenta colored mountain.", "imageUrl": "https://picsum.photos/seed/207/200/200", "imageHint": "magenta mountain" },
+    { "id": "song-8", "description": "Sun shining brightly.", "imageUrl": "https://picsum.photos/seed/208/200/200", "imageHint": "sunshine" },
+    { "id": "song-9", "description": "Bright city lights at night", "imageUrl": "https://picsum.photos/seed/209/200/200", "imageHint": "city lights" },
+    { "id": "song-10", "description": "A view of a distant galaxy.", "imageUrl": "https://picsum.photos/seed/210/200/200", "imageHint": "galaxy view" },
+    { "id": "podcast-1", "description": "A guitar on a stand", "imageUrl": "https://picsum.photos/seed/301/400/400", "imageHint": "guitar stand" },
+    { "id": "podcast-2", "description": "A person looking thoughtful", "imageUrl": "https://picsum.photos/seed/302/400/400", "imageHint": "thoughtful person" },
+    { "id": "podcast-3", "description": "A music producer at a mixing desk", "imageUrl": "https://picsum.photos/seed/303/400/400", "imageHint": "music producer" },
+    { "id": "podcast-4", "description": "Two people in a conversation", "imageUrl": "https://picsum.photos/seed/304/400/400", "imageHint": "conversation interview" },
+    { "id": "podcast-5", "description": "A stack of vinyl records", "imageUrl": "https://picsum.photos/seed/305/400/400", "imageHint": "vinyl records" },
+    { "id": "podcast-6", "description": "Abstract synthesizer waves", "imageUrl": "https://picsum.photos/seed/306/400/400", "imageHint": "synth waves" }
   ]
 }

@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { Menu, Radio } from "lucide-react";
+import { Menu, Mic, Radio, Rss } from "lucide-react";
 import { LivePlayer } from "./LivePlayer";
 import { Logo } from "./Logo";
 
@@ -17,6 +17,7 @@ const navLinks = [
   { href: "/charts", label: "Charts" },
   { href: "/schedule", label: "Schedule" },
   { href: "/gallery", label: "Gallery" },
+  { href: "/podcasts", label: "Podcasts"},
   { href: "/requests", label: "Requests" },
 ];
 
@@ -28,10 +29,10 @@ export function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b">
       <div className="container mx-auto flex h-20 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2" prefetch={false}>
-          <Logo className="h-8 w-8 text-primary" />
-          <span className="font-headline text-2xl font-bold">Rádio Conectar</span>
+          <Logo className="h-10 w-10 text-primary" />
+          <span className="font-headline text-2xl font-bold hidden sm:inline">Rádio Conectar</span>
         </Link>
-        <nav className="hidden md:flex items-center gap-2">
+        <nav className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => (
             <Button
               key={link.href}
@@ -52,7 +53,8 @@ export function Header() {
           <LivePlayer />
         </div>
 
-        <div className="md:hidden">
+        <div className="md:hidden flex items-center gap-2">
+           <LivePlayer />
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
@@ -86,9 +88,6 @@ export function Header() {
                         </Button>
                     ))}
                     </nav>
-                </div>
-                <div className="mt-auto p-6 border-t">
-                    <LivePlayer />
                 </div>
               </div>
             </SheetContent>
