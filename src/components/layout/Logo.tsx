@@ -9,21 +9,16 @@ export function Logo({ className, ...props }: React.SVGProps<SVGSVGElement>) {
       className={cn(className)}
       {...props}
     >
-      <rect width="40" height="40" rx="8" fill="currentColor" />
-      <path
-        d="M17.5 10H22.5V15C22.5 17.7614 20.2614 20 17.5 20V20C14.7386 20 12.5 22.2386 12.5 25V30"
-        stroke="white"
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M27.5 30H22.5V25C22.5 22.2386 24.7386 20 27.5 20V20C30.2614 20 32.5 17.7614 32.5 15V10"
-        stroke="white"
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <g clipPath="url(#clip0_2_2)">
+        <path d="M0 8C0 3.58172 3.58172 0 8 0H32C36.4183 0 40 3.58172 40 8V32C40 36.4183 36.4183 40 32 40H8C3.58172 40 0 36.4183 0 32V8Z" fill="currentColor"/>
+        <path d="M12.9238 29.5L14.7138 10.5H20.7338V15.01C20.7338 17.53 18.7138 19.55 16.1938 19.55H15.9338C13.4138 19.55 11.3938 21.57 11.3938 24.09V29.5H12.9238Z" fill="white"/>
+        <path d="M28.6063 10.5L26.8163 29.5H20.7963V24.99C20.7963 22.47 22.8163 20.45 25.3363 20.45H25.5963C28.1163 20.45 30.1363 18.43 30.1363 15.91V10.5H28.6063Z" fill="white"/>
+      </g>
+      <defs>
+        <clipPath id="clip0_2_2">
+          <rect width="40" height="40" rx="8" fill="white"/>
+        </clipPath>
+      </defs>
     </svg>
   );
 }

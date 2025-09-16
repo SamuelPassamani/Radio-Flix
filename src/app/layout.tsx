@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { Toaster } from "@/components/ui/toaster"
+import { RightSidebarPlayer } from '@/components/layout/RightSidebarPlayer';
 
 export const metadata: Metadata = {
   title: 'Rádio Conectar',
@@ -24,9 +25,10 @@ export default function RootLayout({
       <body className="font-body antialiased bg-background text-foreground min-h-screen">
         <div className="relative flex min-h-screen flex-col">
           <Header />
-          <main className="flex-1 pt-20">
+          <main className="flex-1">
             {children}
           </main>
+          <RightSidebarPlayer />
         </div>
         <Toaster />
       </body>

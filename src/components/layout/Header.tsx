@@ -7,18 +7,17 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { Menu, Mic, Radio, Rss } from "lucide-react";
-import { LivePlayer } from "./LivePlayer";
+import { Menu, Radio, Rss, Twitter, Facebook, Instagram } from "lucide-react";
 import { Logo } from "./Logo";
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/news", label: "News" },
-  { href: "/charts", label: "Charts" },
-  { href: "/schedule", label: "Schedule" },
-  { href: "/gallery", label: "Gallery" },
-  { href: "/podcasts", label: "Podcasts"},
-  { href: "/requests", label: "Requests" },
+  { href: "/", label: "Sobre-nos" },
+  { href: "/news", label: "Notícias" },
+  { href: "/charts", label: "Blog" },
+  { href: "/schedule", label: "Programação" },
+  { href: "/gallery", label: "Galerias de fotos" },
+  { href: "/podcasts", label: "Eventos"},
+  { href: "/requests", label: "Contato" },
 ];
 
 export function Header() {
@@ -26,21 +25,22 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b">
-      <div className="container mx-auto flex h-20 items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2" prefetch={false}>
-          <Logo className="h-10 w-10 text-primary" />
-          <span className="font-headline text-2xl font-bold hidden sm:inline">Rádio Conectar</span>
+    <header className="sticky top-0 z-40 bg-card/95 backdrop-blur-sm">
+      <div className="container mx-auto flex h-24 items-center justify-between px-4">
+        <Link href="/" className="flex items-center gap-3" prefetch={false}>
+          <Logo className="h-16 w-16 text-primary" />
+          <span className="font-headline text-3xl font-bold hidden sm:inline">Sound PRO</span>
         </Link>
-        <nav className="hidden md:flex items-center gap-1">
+        
+        <nav className="hidden lg:flex items-center justify-center gap-1 absolute left-1/2 -translate-x-1/2">
           {navLinks.map((link) => (
             <Button
               key={link.href}
               variant="ghost"
               asChild
               className={cn(
-                "font-medium",
-                pathname === link.href ? "text-primary" : "text-foreground"
+                "font-medium text-lg uppercase hover:border-primary hover:bg-transparent rounded-none transition-all duration-300 px-4",
+                pathname === link.href ? "text-primary border-b-4 border-primary" : "text-foreground border-b-4 border-transparent"
               )}
             >
               <Link href={link.href} prefetch={false}>
@@ -49,51 +49,59 @@ export function Header() {
             </Button>
           ))}
         </nav>
-        <div className="hidden md:block">
-          <LivePlayer />
-        </div>
 
-        <div className="md:hidden flex items-center gap-2">
-           <LivePlayer />
-          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle Menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] bg-background">
-              <div className="flex flex-col h-full">
-                <div className="p-6">
-                    <Link href="/" className="flex items-center gap-2 mb-8" onClick={() => setIsMobileMenuOpen(false)}>
-                        <Logo className="h-8 w-8 text-primary" />
-                        <span className="font-headline text-2xl font-bold">Rádio Conectar</span>
-                    </Link>
-                    <nav className="flex flex-col gap-4">
-                    {navLinks.map((link) => (
-                        <Button
-                        key={link.href}
-                        variant="ghost"
-                        asChild
-                        size="lg"
-                        className={cn(
-                            "justify-start text-lg",
-                            pathname === link.href ? "text-primary bg-primary/10" : "text-foreground"
-                        )}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                        <Link href={link.href} prefetch={false}>
-                            {link.label}
+        <div className="flex items-center gap-2">
+            <div className="hidden md:flex items-center gap-1">
+                 <Button variant="ghost" size="icon" asChild className="rounded-full hover:bg-primary/20">
+                    <a href="#" target="_blank"><Facebook /></a>
+                 </Button>
+                 <Button variant="ghost" size="icon" asChild className="rounded-full hover:bg-primary/20">
+                    <a href="#" target="_blank"><Twitter /></a>
+                 </Button>
+                 <Button variant="ghost" size="icon" asChild className="rounded-full hover:bg-primary/20">
+                    <a href="#" target="_blank"><Instagram /></a>
+                 </Button>
+            </div>
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                <SheetTrigger asChild className="lg:hidden">
+                <Button variant="ghost" size="icon">
+                    <Menu className="h-6 w-6" />
+                    <span className="sr-only">Toggle Menu</span>
+                </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-[300px] bg-card">
+                <div className="flex flex-col h-full">
+                    <div className="p-6">
+                        <Link href="/" className="flex items-center gap-2 mb-8" onClick={() => setIsMobileMenuOpen(false)}>
+                            <Logo className="h-8 w-8 text-primary" />
+                            <span className="font-headline text-2xl font-bold">Sound PRO</span>
                         </Link>
-                        </Button>
-                    ))}
-                    </nav>
+                        <nav className="flex flex-col gap-4">
+                        {navLinks.map((link) => (
+                            <Button
+                            key={link.href}
+                            variant="ghost"
+                            asChild
+                            size="lg"
+                            className={cn(
+                                "justify-start text-lg",
+                                pathname === link.href ? "text-primary bg-primary/10" : "text-foreground"
+                            )}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                            <Link href={link.href} prefetch={false}>
+                                {link.label}
+                            </Link>
+                            </Button>
+                        ))}
+                        </nav>
+                    </div>
                 </div>
-              </div>
-            </SheetContent>
-          </Sheet>
+                </SheetContent>
+            </Sheet>
         </div>
       </div>
+       <div className="w-full h-1 bg-primary" />
     </header>
   );
 }

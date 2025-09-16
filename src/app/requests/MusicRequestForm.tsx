@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect } from "react";
@@ -20,11 +21,13 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Send } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
   artist: z.string().min(1, "Artist is required."),
   song: z.string().min(1, "Song title is required."),
+  message: z.string().optional(),
 });
 
 type FormState = {
@@ -43,6 +46,7 @@ export function MusicRequestForm() {
       name: "",
       artist: "",
       song: "",
+      message: "",
     },
   });
 
@@ -71,22 +75,35 @@ export function MusicRequestForm() {
   }, [state, toast, form]);
 
   return (
-    <Card>
+    <Card className="bg-card/50 border-0 shadow-none">
       <CardHeader>
-        <CardTitle className="font-headline">Your Request</CardTitle>
-        <CardDescription>All requests are subject to review before being played.</CardDescription>
+        <CardTitle className="font-headline text-primary uppercase text-center">Deixe seu recado</CardTitle>
+        <CardDescription className="text-center">
+          Para deixar seu recado preencha os campos abaixo:
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form action={formAction} className="space-y-6">
+          <form action={formAction} className="space-y-4">
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Your Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. Alex Doe" {...field} />
+                    <Input placeholder="Seu nome" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <FormField
+              control={form.control}
+              name="song"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input placeholder="Nome da Música" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -97,33 +114,27 @@ export function MusicRequestForm() {
               name="artist"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Artist</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. The Red Tides" {...field} />
+                    <Input placeholder="Nome do Artista" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <FormField
+             <FormField
               control={form.control}
-              name="song"
+              name="message"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Song Title</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. Crimson Waves" {...field} />
+                    <Textarea placeholder="Mensagem" {...field} className="min-h-[60px]" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={form.formState.isSubmitting} className="w-full">
-              {form.formState.isSubmitting ? "Submitting..." : (
-                <>
-                  <Send className="mr-2 h-4 w-4" /> Submit Request
-                </>
-              )}
+            <Button type="submit" disabled={form.formState.isSubmitting} className="w-full uppercase">
+              {form.formState.isSubmitting ? "Enviando..." : "Enviar"}
             </Button>
           </form>
         </Form>
