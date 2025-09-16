@@ -1,24 +1,16 @@
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
-export function Logo({ className, ...props }: React.SVGProps<SVGSVGElement>) {
+export function Logo({ className, ...props }: React.ComponentProps<typeof Image>) {
   return (
-    <svg
-      width="512"
-      height="512"
-      viewBox="0 0 512 512"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+    <Image
+      src="https://cdn.xcam.gay/10:/R%C3%A1dio%20Flix/logo/logo.svg"
+      alt="Rádio Flix Logo"
+      width={64}
+      height={64}
       className={cn(className)}
       {...props}
-    >
-      <path
-        d="M503.224 246.643C503.224 233.911 498.423 221.722 490.04 212.016L301.693 2.99969C293.31  -6.7066 280.443 -9.18663 268.647 1.48773C259.579 6.7066 254.777 16.9567 254.777 27.2068V119.539C244.53 115.352 232.735 112.328 220.395 112.328H211.233C94.5269 112.328 0 206.855 0 323.561V333.367C0 346.099 4.80113 358.288 13.1843 368C21.5674 377.706 33.9081 382.507 46.6401 382.507H465.36C478.092 382.507 490.433 377.706 498.816 368C507.2 358.288 512 346.099 512 333.367V284.9C512 263.929 494.949 246.643 474.522 246.643H503.224Z"
-        fill="#C42429"
-      />
-      <path
-        d="M228.761 146.471H254.777V205.495C254.777 232.183 233.279 253.682 206.591 253.682H197.43C170.742 253.682 149.244 275.18 149.244 301.868V350.324H123.228V301.868C123.228 261.341 155.627 228.942 197.43 228.942H206.591C218.387 228.942 228.761 218.568 228.761 206.772V146.471Z"
-        fill="white"
-      />
-    </svg>
+      unoptimized
+    />
   );
 }

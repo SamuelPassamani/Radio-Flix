@@ -73,7 +73,7 @@ export function Header() {
                 <div className="flex flex-col h-full">
                     <div className="p-6">
                         <Link href="/" className="flex items-center gap-2 mb-8" onClick={() => setIsMobileMenuOpen(false)}>
-                            <Logo className="h-8 w-auto" />
+                            <Logo className="h-8 w-auto" height={32} width={32} />
                             <span className="font-headline text-2xl font-bold">Rádio Flix</span>
                         </Link>
                         <nav className="flex flex-col gap-4">
