@@ -15,7 +15,7 @@ const navLinks = [
   { href: "/news", label: "Notícias" },
   { href: "/charts", label: "Blog" },
   { href: "/schedule", label: "Programação" },
-  { href: "/gallery", label: "Galerias de fotos" },
+  { href: "/gallery", label: "GALERIAS" },
   { href: "/podcasts", label: "Eventos"},
   { href: "/requests", label: "Contato" },
 ];
