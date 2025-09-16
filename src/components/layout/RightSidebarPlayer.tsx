@@ -9,7 +9,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 // URLs e constantes da API
-const STREAM_URL = "https://cast2.hoost.com.br:20000/stream";
+const STREAM_URL = "https://stream.zeno.fm/cbzw2rbebfkuv";
 const API_URL = `https://twj.es/free/?url=${STREAM_URL}`;
 const FALLBACK_API_URL = `https://twj.es/metadata/?url=${STREAM_URL}`;
 const DEFAULT_COVER_ART = "/img/cover.png";
@@ -59,8 +59,8 @@ const getDataFromITunes = async (artist: string, title: string): Promise<{ art: 
 };
 
 export function RightSidebarPlayer() {
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [volume, setVolume] = useState(80);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(70);
   const [isMuted, setIsMuted] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
   const [songData, setSongData] = useState<SongData>({
@@ -74,6 +74,10 @@ export function RightSidebarPlayer() {
   const currentSongTitleRef = useRef<string | null>(null);
 
   useEffect(() => {
+    if (audioRef.current) {
+        audioRef.current.play().catch(e => console.error("Autoplay was prevented:", e));
+    }
+    
     const fetchStreamingData = async (url: string): Promise<any> => {
       try {
         const response = await fetch(url);
@@ -120,13 +124,12 @@ export function RightSidebarPlayer() {
 
   const togglePlay = () => {
     if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
+      if (audioRef.current.paused) {
         audioRef.current.load();
         audioRef.current.play().catch(e => console.error("Play error:", e));
+      } else {
+        audioRef.current.pause();
       }
-      setIsPlaying(!isPlaying);
     }
   };
 
@@ -143,7 +146,6 @@ export function RightSidebarPlayer() {
         ref={audioRef} 
         src={STREAM_URL} 
         preload="auto" 
-        autoPlay
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
       />
