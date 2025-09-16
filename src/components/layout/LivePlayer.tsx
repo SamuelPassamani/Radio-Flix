@@ -1,16 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+const STREAM_URL = "https://cast2.hoost.com.br:20000/stream";
 
 export function LivePlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState([50]);
   const [isMuted, setIsMuted] = useState(false);
   const [barHeights, setBarHeights] = useState<number[]>([]);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     const newBars = Array.from({ length: 15 }, () => Math.random() * 80 + 20);
@@ -25,30 +28,44 @@ export function LivePlayer() {
     }
   }, [isPlaying]);
 
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = isMuted ? 0 : volume[0] / 100;
+    }
+  }, [volume, isMuted]);
+
   const togglePlay = () => {
-    setIsPlaying(!isPlaying);
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.load(); // Important for some streaming sources
+        audioRef.current.play().catch(e => console.error("Play error:", e));
+      }
+      setIsPlaying(!isPlaying);
+    }
   };
 
   const toggleMute = () => {
-    setIsMuted(!isMuted);
-    if(!isMuted) {
-        setVolume([0]);
-    } else {
-        setVolume([50]);
+    const newMuted = !isMuted;
+    setIsMuted(newMuted);
+    if(audioRef.current) {
+      audioRef.current.muted = newMuted;
     }
   };
 
   const handleVolumeChange = (newVolume: number[]) => {
     setVolume(newVolume);
-    if(newVolume[0] === 0) {
-        setIsMuted(true);
+    if (newVolume[0] === 0) {
+      setIsMuted(true);
     } else {
-        setIsMuted(false);
+      setIsMuted(false);
     }
   };
 
   return (
     <div className="flex items-center gap-4 p-2 rounded-lg bg-card border w-full md:w-auto">
+      <audio ref={audioRef} src={STREAM_URL} preload="none" />
       <Button variant="ghost" size="icon" onClick={togglePlay} className="flex-shrink-0">
         {isPlaying ? <Pause className="h-6 w-6 text-primary" /> : <Play className="h-6 w-6" />}
       </Button>
