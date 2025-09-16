@@ -10,7 +10,7 @@ import Link from "next/link";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { topCharts } from "@/lib/data";
 
-const STREAM_URL = "https://cast2.hoost.com.br:20000/stream";
+const STREAM_URL = "https://stream.zeno.fm/cbzw2rbebfkuv";
 
 export function RightSidebarPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
