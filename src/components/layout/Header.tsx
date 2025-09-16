@@ -29,7 +29,6 @@ export function Header() {
       <div className="container mx-auto flex h-24 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-3" prefetch={false}>
           <Logo className="h-16 w-auto" />
-          <span className="font-headline text-3xl font-bold hidden sm:inline">Rádio Flix</span>
         </Link>
         
         <nav className="hidden lg:flex items-center justify-center gap-1 absolute left-1/2 -translate-x-1/2">
