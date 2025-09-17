@@ -28,7 +28,7 @@ export function Header() {
     <header className="sticky top-0 z-40 bg-card/95 backdrop-blur-sm">
       <div className="container mx-auto flex h-24 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-3" prefetch={false}>
-          <Logo className="h-16 w-auto" />
+          <Logo className="w-16 h-auto" />
         </Link>
         
         <nav className="hidden lg:flex items-center justify-center gap-1 absolute left-1/2 -translate-x-1/2">
@@ -72,7 +72,7 @@ export function Header() {
                 <div className="flex flex-col h-full">
                     <div className="p-6">
                         <Link href="/" className="flex items-center gap-2 mb-8" onClick={() => setIsMobileMenuOpen(false)}>
-                            <Logo className="h-8 w-auto" height={32} width={32} />
+                            <Logo className="w-8 h-auto" height={32} width={32} />
                             <span className="font-headline text-2xl font-bold">Rádio Flix</span>
                         </Link>
                         <nav className="flex flex-col gap-4">
