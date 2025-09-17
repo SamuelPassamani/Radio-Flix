@@ -1,0 +1,303 @@
+textarea.sk-area {
+    width: 99%;
+    height: 80px;
+    color:#5188d2;
+    border:1px solid #cbcbcb;
+    background:#fcfcfc;
+  }
+
+.sk-little {
+	font-size : 80%;
+}
+
+/****** Button over the text
+div.sk-box-text {
+	text-align: right;
+}
+
+div.sk-box-button {
+	width: 100%;
+}
+
+input.sk-button-size {
+	width: 100%;
+} */
+
+/* End of css for button over the text */
+
+/****** Button at the right side of the text */
+div.sk-box-message {
+		margin-right: 5px;
+		clear: both;
+		text-align: center;
+	}
+
+div.sk-box-text {
+		margin-right: 5px;
+		float: right;
+		text-align: right;
+	}
+
+div.sk-box-button {
+		float: right;
+	}
+
+input.sk-button-size {
+  }
+  
+/* End of css for button at the right side of the text */
+
+
+div#skname {
+    width:100%;
+  }
+
+td#skout {
+	width:100%;
+	}
+
+td#skwarning {
+    width:100%;
+		border:1px solid #cbcbcb;
+		text-align: center;
+  }
+	
+p#skwarning {
+		width:100%;
+		border:1px solid #cbcbcb;
+		text-align: center;
+  }
+
+img.avatar-25 {
+    float : left;
+  }
+
+img.avatar-32 {	
+	margin-right: 5px;
+	float : left;
+  }
+	
+img.avatar-41 {
+	margin-right: 5px;	
+	float : left;
+  }
+	
+div.sk-widgettext {
+	clear: both;
+	overflow: hidden;
+	margin-top : 3px;
+}
+
+.sk-userdata-user {
+	/*background-color: #f1f1f1;*/
+}
+
+.sk-userdata-user-spam {
+	background-color: #e3acac;
+}
+
+.sk-userdata-user-moot {
+	background-color: #e1cf68;
+}
+
+.sk-userdata-admin {
+	/*background-color: #f1f1f1;*/
+	line-height: 13px;
+}
+
+.sk-userdata-admin-spam {
+	background-color: #e3acac;
+	line-height: 13px;
+}
+
+.sk-userdata-admin-moot {
+	background-color: #e1cf68;
+	line-height: 13px;
+}
+
+.skwidget-comment {
+	max-width : 100%;
+	text-align: left;
+	float : left;
+ }
+  
+.skwidget-edit {
+	margin-left: 10px;
+	white-space: nowrap;
+	float : right;
+}
+
+.sk-comment {
+	margin: 6px 2px 1px 0px;
+	padding: 4px;
+}
+
+.sk-comment-spam {
+	margin: 6px 2px 1px 0px;
+	padding: 4px;
+	border: solid 1px #e1e1e1 !important;
+	background-color: #e17a7a !important;
+}
+
+.sk-comment-moot {
+	margin: 6px 2px 1px 0px;
+	padding: 4px;
+	border: solid 1px #e1e1e1 !important;
+	background-color: #edde88 !important;
+}
+
+div.throbber-page-on {		
+	width: 100%;
+	text-align: center;
+	background: url(../img/loading.gif) no-repeat center;
+	filter: alpha(opacity= 30);
+	-moz-opacity: .30;
+	opacity: .30;
+	font-size: 0;
+	min-height: 17px;
+}
+
+div.throbber-page-off {	
+	width: 100%;
+	text-align: center;
+	background: none;
+	min-height: 17px;
+}
+
+div.throbber-img-on {
+	display: block;
+	margin: 6px 2px 1px 0px;
+	padding: 4px;
+	border: solid 1px #e1e1e1;
+}
+
+li.throbber-img-on {
+	display: block;
+}
+
+li.throbber-img-off, div.throbber-img-off {
+	display: none;
+}
+
+span.sk-for {
+	text-align: right;
+}
+
+span.sk-for#answer {
+	cursor : pointer;
+	color: #1e5c8f;
+}
+
+tr.sk-for-nai {
+	display: none;
+}
+
+tr.sk-for-yep {
+	display: table-row;
+}
+
+.sk-separate {	
+	padding-top : 8px;
+	line-height : 15px;
+}
+
+.sk-page-actual {
+	font-size : 90%;
+}
+
+.sk-page-other {
+	cursor : pointer;
+	font-size : 125%;
+}
+
+table.sk-table {
+	width: 100%;
+	margin: 0px;
+}
+
+table.sk-table tr td {
+	margin: 0px;
+	background-color: transparent;
+	border: none;
+}
+
+div.sk-reply {
+	padding: 2px 4px 2px 15px;
+	margin-top: 10px;
+	border-top: 1px solid #E1E1E1;
+}
+
+div.sk-reply-on {
+	background-color: #e17a7a;
+}
+
+/*.sk-user-admin {
+	background-color: #F1F1F1;
+}
+
+.sk-user-admin div img.avatar {
+	float: right;
+	margin-right: 0px;
+	margin-left: 5px;
+}
+
+.sk-user-editor {
+	background-color: #F1F1F1;
+}
+
+.sk-user-author {
+	background-color: #F1F1F1;
+}
+
+.sk-user-user {
+	background-color: #F1F1F1;
+}*/
+
+.sku-count {
+	float: left;
+	width: 20px;
+	text-align: center;
+	margin-right: 4px;
+	background: #AABCC0;
+	color: white;
+}
+
+.sku-content {
+	padding: 3px 25px 3px;
+}
+
+ul.sku-list {
+	list-style-type: none;
+	padding: 0px;
+}
+
+li.sku-back {
+	background: #EAF2F4;
+}
+
+.sku-list li {
+	border-top: 1px solid black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*** HOOST ***/
+div.sk-box-text {width:100%; display:block; text-align:left; font-size:11px; float:none;}
+.sk-button{ border-radius: 5px; color:#fff;  text-align: center;  font-family: 'bebas_neueregular', Arial, Helvetica, sans-serif;  font-size: 18px;  padding: 5px 20px;  cursor: pointer;  text-shadow: 1px 1px 0px rgba(0,0,0,0.3);  border: none;}
+
+
+.sk-comment img {display:block; border-radius:100px; overflow:hidden; border:solid 3px #fff;  float: left;   margin-right: 10px;}
+.sk-comment strong {    font-size: 18px;    opacity: 1;    top: 8px;    display: block;    position: relative;}
+.sk-comment .sk-little {font-size:9px; opacity:0.5;    top: 10px;    display: block;    position: relative}
+.sk-widgettext {width:100%; padding:10px; border-radius:5px;}

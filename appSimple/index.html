@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rádio Flix</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header id="header">
+        <div class="logo">
+            <img src="logo.png" alt="Rádio Flix">
+        </div>
+        <nav class="menuAjaxfy">
+            <ul class="main-navi">
+                <li><a href="#">Início</a></li>
+                <li><a href="#">Notícias</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Galeria</a></li>
+                <li><a href="#">Eventos</a></li>
+                <li><a href="#">Contato</a></li>
+            </ul>
+        </nav>
+        <div id="player-container"></div>
+        <div class="social-icons">
+            <a href="#"><img src="icons/facebook.svg" alt="Facebook"></a>
+            <a href="#"><img src="icons/instagram.svg" alt="Instagram"></a>
+            <a href="#"><img src="icons/youtube.svg" alt="YouTube"></a>
+        </div>
+    </header>
+    <main>
+        <!-- Slider/banner principal -->
+        <section class="sliderPrincipal">
+            <div id="slider-home" class="slider-wrapper">
+                <!-- Slides serão renderizados via JS -->
+                <div class="slider-nav">
+                    <button class="slider-prev">&lt;</button>
+                    <button class="slider-next">&gt;</button>
+                </div>
+                <div class="slider-pager"></div>
+            </div>
+        </section>
+        <!-- Banner de publicidade horizontal -->
+        <section class="banners-publicidade">
+            <div class="banner-ad">
+                <a href="http://www.hoost.com.br/" target="_blank">
+                    <img src="src/src_files/banner_horizontal.png" alt="Publicidade" style="width:100%;max-width:900px;">
+                </a>
+            </div>
+        </section>
+        <!-- Carrossel de notícias -->
+        <section class="ultimas-noticias noticiasContainer" id="noticias">
+            <div id="news-carousel"></div>
+        </section>
+        <section class="painel-central containerHome">
+            <aside class="menu-lateral colunaEsquerda">
+                <div id="pedido-musica" class="widget_container widget_hoost_pedidos_musica"></div>
+                <div id="mural-recados" class="widget_container widget_sk"></div>
+                <div id="enquete" class="widget_container widget_totalpoll"></div>
+                <div class="widget-banner widget_container widget_media_image">
+                    <h3 class="titleWidgets">Publicidade</h3>
+                    <div class="sepWidgets"></div>
+                    <img src="src/src_files/Untitled-1.png" alt="Banner lateral" style="width:100%;max-width:255px;">
+                </div>
+                <div class="widget-galeria widget_container widget_media_gallery"></div>
+            </aside>
+            <div class="conteudo-central colunaCentral">
+                <div id="noticias-destaque" class="widget_container widget_hoost_noticias"></div>
+                <div id="videos-destaque" class="widget_container widget_hoost_video"></div>
+                <div id="ultimas-musicas" class="widget_container widget_hoost_blog"></div>
+                <div id="top10" class="widget_container widget_hoost_topdez"></div>
+            </div>
+            <aside class="widgets-lateral colunaDireita">
+                <div class="widget-social widget_container widget_hoost_social">
+                    <h3 class="titleWidgets">Segue lá</h3>
+                    <div class="sepWidgets"></div>
+                    <a href="https://instagram.com/hoostcom">
+                        <img src="src/src_files/banner_vertical.png" alt="Banner vertical" style="width:100%;max-width:255px;">
+                    </a>
+                </div>
+            </aside>
+        </section>
+        <section class="galeria-exemplo fotosContainer" id="galeria">
+            <!-- Galeria será renderizada via JS -->
+        </section>
+        <section class="grade-programacao" id="programacao"></section>
+        <section class="eventos" id="eventos"></section>
+        <!-- Banner de publicidade horizontal -->
+        <section class="banners-publicidade">
+            <div class="banner-ad">
+                <img src="src/src_files/banner_horizontal2.png" alt="Publicidade" style="width:100%;max-width:900px;">
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-app">
+            <img src="src/src_files/banner_horizontal_app.png" alt="App Oficial">
+        </div>
+        <div class="footer-links posRodape">
+            <div class="widget_container widget_nav_menu footer_widget first">
+                <h3 class="titleWidgets">Menu</h3>
+                <div class="sepWidgets"></div>
+                <ul class="menu">
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#">Notícias</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Programação</a></li>
+                    <li><a href="#">Galeria</a></li>
+                    <li><a href="#">Eventos</a></li>
+                    <li><a href="#">Vídeos</a></li>
+                    <li><a href="#">Equipe</a></li>
+                    <li><a href="#">Promoções</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </div>
+            <div class="widget_container widget_hoost_social footer_widget seccond">
+                <h3 class="titleWidgets">Curta no social</h3>
+                <div class="sepWidgets"></div>
+                <ul class="linksSociais">
+                    <li>
+                        <a href="http://facebook.com/hoostcom" target="_blank" class="linkSocial">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://twitter.com/hoostcom" target="_blank" class="linkSocial">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://instagram.com/hoostcom" target="_blank" class="linkSocial">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="widget_container widget_text footer_widget thre">
+                <h3 class="titleWidgets">Texto</h3>
+                <div class="sepWidgets"></div>
+                <div class="textwidget">
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+                    <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
+                </div>
+            </div>
+            <div class="widget_container widget_hoost_facebook footer_widget four">
+                <h3 class="titleWidgets">Curta no Facebook</h3>
+                <div class="sepWidgets"></div>
+                <div class="boxFacebookWidget">
+                    <iframe src="https://www.facebook.com/plugins/page.php?href=https://www.facebook.com/HoostCom&tabs=timeline&width=256&height=130&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                        width="256" height="130" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
+                </div>
+            </div>
+            <div class="widget_container widget_hoost_whatsapp footer_widget">
+                <h3 class="titleWidgets">Whatsapp</h3>
+                <div class="sepWidgets"></div>
+                <a href="https://web.whatsapp.com/send?l=en&phone=+5511999999999" target="_blank" class="buttonZap" style="display:block;text-align:center;">
+                    <img src="icons/whatsapp.svg" alt="Whatsapp" style="width:32px;height:32px;vertical-align:middle;">
+                    <span style="margin-left:8px;">Fale conosco via Whatsapp: <strong>+55 11 999999999</strong></span>
+                </a>
+            </div>
+        </div>
+        <div class="footer-copy rodape">
+            &copy; 2024 Rádio Flix. Todos os direitos reservados.
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/noticias.js"></script>
+    <script src="js/mural.js"></script>
+    <script src="js/galeria.js"></script>
+    <script src="js/top10.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/slider.js"></script>
+</body>
+</html>
