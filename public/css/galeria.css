@@ -1,0 +1,71 @@
+/* Estilos específicos da galeria de fotos */
+/* Adicione aqui as regras da galeria */
+
+/* Galeria de Fotos */
+.fotosContainer,
+.galeria-exemplo {
+  background: var(--cor-bg-sec);
+  border-radius: 10px;
+  padding: 24px;
+  margin: 32px auto 0 auto;
+  max-width: 1200px;
+}
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin: 0 -9px;
+}
+.gallery-item {
+  width: calc(33.333% - 18px);
+  margin: 0;
+  text-align: center;
+}
+.gallery-item img {
+  width: 150px;
+  height: 150px;
+  border: 2px solid var(--cor-borda);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 4px #0001;
+  object-fit: cover;
+  margin: 0 auto;
+  display: block;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.gallery-item img:hover {
+  box-shadow: 0 4px 16px #0003;
+  border-color: var(--cor-principal);
+}
+
+/* Responsividade galeria */
+@media (max-width: 900px) {
+  .gallery {
+    gap: 10px;
+  }
+  .gallery-item {
+    width: 100%;
+  }
+  .gallery-item img {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 600px) {
+  .fotosContainer,
+  .galeria-exemplo {
+    padding: 12px;
+    margin: 16px auto 0 auto;
+  }
+  .gallery {
+    gap: 6px;
+  }
+  .gallery-item {
+    width: 100%;
+  }
+  .gallery-item img {
+    width: 80px;
+    height: 80px;
+  }
+}

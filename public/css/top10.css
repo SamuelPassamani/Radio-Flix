@@ -1,0 +1,78 @@
+/* Estilos específicos do Top 10 */
+/* Adicione aqui as regras do Top 10 */
+
+/* Top 10 */
+.widget_hoost_topdez {
+  background: var(--cor-bg-sec);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #0002;
+  padding: 18px;
+  margin-bottom: 12px;
+}
+.widget_hoost_topdez h3.titleWidgets {
+  color: var(--cor-texto);
+  font-family: 'bebas_neueregular', Arial, sans-serif;
+  font-size: 1.3rem;
+  margin: 0 0 10px 0;
+  border-left: 5px solid var(--cor-principal);
+  padding-left: 10px;
+}
+.containerTop.secundarioTop {
+  background: var(--cor-bg);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 1px 4px #0002;
+}
+.thumbImgTop .subAVideo img {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 1px 4px #0002;
+  border: 2px solid var(--cor-principal);
+}
+.nomeCantor span {
+  color: var(--cor-principal);
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-right: 6px;
+}
+.nomeCantor {
+  font-size: 1.05rem;
+  color: var(--cor-texto);
+}
+.musicaTop {
+  color: var(--cor-texto-sec);
+  font-size: 0.98rem;
+}
+
+/* Responsividade Top 10 */
+@media (max-width: 900px) {
+  .containerTop.secundarioTop {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px;
+  }
+  .thumbImgTop .subAVideo img {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+@media (max-width: 600px) {
+  .containerTop.secundarioTop {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 6px;
+  }
+  .thumbImgTop .subAVideo img {
+    width: 36px;
+    height: 36px;
+  }
+}

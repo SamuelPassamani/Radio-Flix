@@ -1,0 +1,71 @@
+/* Estilos específicos do mural de recados */
+/* Adicione aqui as regras do mural */
+
+/* Mural de Recados */
+.widget_sk {
+  background: var(--cor-bg-sec);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #0002;
+  padding: 18px;
+  margin-bottom: 12px;
+}
+.widget_sk .sk-comment {
+  background: var(--cor-bg);
+  border-radius: 8px;
+  box-shadow: 0 1px 4px #0002;
+  padding: 12px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.widget_sk .sk-userdata-user img {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  margin-right: 10px;
+  border: 3px solid var(--cor-principal);
+}
+.widget_sk .sk-userdata-user strong {
+  color: var(--cor-principal);
+  font-size: 1.1rem;
+}
+.widget_sk .sk-little {
+  font-size: 0.95rem;
+  color: var(--cor-texto-sec);
+}
+.widget_sk .sk-widgettext {
+  background: var(--cor-bg-sec);
+  border-radius: 8px;
+  padding: 8px;
+  color: var(--cor-texto);
+  font-size: 1rem;
+}
+.widget_sk .openFormShout span {
+  background: var(--cor-principal);
+  color: #fff;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-family: 'bebas_neueregular', Arial, sans-serif;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+/* Responsividade mural */
+@media (max-width: 600px) {
+  .widget_sk .sk-userdata-user img {
+    width: 40px;
+    height: 40px;
+    margin-right: 6px;
+  }
+  .widget_sk .sk-comment {
+    padding: 8px;
+    gap: 6px;
+  }
+  .widget_sk .sk-widgettext {
+    padding: 6px;
+    font-size: 0.95rem;
+  }
+}

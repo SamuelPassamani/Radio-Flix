@@ -8,6 +8,24 @@
       "imageHint": "man headphones"
     },
     {
+      "id": "slider-1",
+      "description": "Woman listening to music on headphones in a city.",
+      "imageUrl": "https://picsum.photos/seed/11/1920/1080",
+      "imageHint": "woman music"
+    },
+    {
+      "id": "slider-2",
+      "description": "A radio host speaking into a microphone in a studio.",
+      "imageUrl": "https://picsum.photos/seed/12/1920/1080",
+      "imageHint": "radio host"
+    },
+    {
+      "id": "slider-3",
+      "description": "A crowd at a vibrant music concert.",
+      "imageUrl": "https://picsum.photos/seed/13/1920/1080",
+      "imageHint": "music concert"
+    },
+    {
       "id": "news-1",
       "description": "A musician playing a guitar on stage.",
       "imageUrl": "https://picsum.photos/seed/2/400/300",

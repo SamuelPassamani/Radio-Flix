@@ -1,3 +1,27 @@
+export const sliderData = [
+  {
+    id: 1,
+    imageId: "slider-1",
+    title: "SUA RÁDIO, SEU CAMINHO",
+    description: "A melhor programação, onde você estiver.",
+    link: "/schedule"
+  },
+  {
+    id: 2,
+    imageId: "slider-2",
+    title: "PEÇA SUA MÚSICA",
+    description: "Sua voz na nossa rádio. Participe!",
+    link: "/requests"
+  },
+  {
+    id: 3,
+    imageId: "slider-3",
+    title: "ÚLTIMAS NOTÍCIAS",
+    description: "Fique por dentro do mundo da música.",
+    link: "/news"
+  }
+];
+
 export const news = [
   {
     id: 1,

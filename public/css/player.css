@@ -1,0 +1,1661 @@
+/* Importar fontes da aplicação de referência e definir variáveis */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&family=Bebas+Neue&display=swap');
+
+:root {
+  --bg-dark: #181818;
+  --panel-dark: #121212;
+  --panel-contrast: #232323;
+  --accent: #c4242a;
+  --muted: #ccc;
+  --text: #fff;
+}
+
+/* General Player Styles */
+#player-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 350px;
+  height: 100%;
+  background-color: var(--bg-dark);
+  border-left: 1px solid #232323;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  color: var(--text);
+  font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  box-shadow: -2px 0 12px #000a;
+}
+
+#player-container.open {
+  right: 0;
+}
+
+.player-toggle-btn {
+  position: absolute;
+  top: 20px;
+  left: -48px;
+  width: 40px;
+  height: 40px;
+  background-color: #c4242a; /* vermelho do botão play */
+  color: #fff;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-toggle-btn:hover {
+  background-color: #a81e23; /* vermelho mais escuro no hover */
+}
+
+/* Player Content */
+.player-content {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 32px 0 24px 0;
+  gap: 12px;
+}
+
+.album-art-container {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  margin-bottom: 32px; /* Aumenta o espaço abaixo do vinil */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* capa da música: quadrada, fixa (não girar) */
+.album-art {
+  width: 210px;
+  height: 210px;
+  object-fit: cover;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  background: #232323;
+  z-index: 2;
+  position: absolute;
+  left: 50%;
+  top: 15px;
+  transform: translateX(-50%);
+}
+
+/* remover uso de spin na própria capa (não será usado) */
+
+/* vinil: igual ou menor que a capa, posicionado um pouco abaixo */
+.vinyl {
+  position: absolute;
+  left: 50%;
+  /* Aumente o valor de bottom para descer mais o vinil */
+  bottom: -32px;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 180px;
+  z-index: 1;
+  pointer-events: none;
+  animation: spinVinyl 4s linear infinite;
+  opacity: 0.98;
+}
+
+/* keyframes para animar o vinil */
+@keyframes spinVinyl {
+  from { transform: translateX(-50%) rotate(0deg); }
+  to   { transform: translateX(-50%) rotate(360deg); }
+}
+
+/* botão central acima da capa permanece acima de tudo */
+.play-pause-button { z-index: 3; }
+
+.song-info {
+  width: 100%;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 0 8px 0;
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+.song-title {
+  font-family: 'Bebas Neue', Arial, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0;
+  line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.song-artist {
+  font-family: 'Poppins', Arial, sans-serif;
+  font-size: 1rem;
+  color: #ccc;
+  font-weight: 400;
+  margin: 2px 0 0 0;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+/* Volume Controls */
+.volume-controls {
+  width: 100%;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.volume-slider-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 0 8px;
+  min-height: 28px;
+  background: transparent;
+}
+
+/* slider com camada de preenchimento controlada por --volume-fill */
+.volume-slider {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-dark);
+  border-radius: 9999px;
+  position: relative;
+  -webkit-appearance: none;
+  appearance: none;
+  appearance: none;
+  outline: none;
+}
+
+/* ::before desenha o preenchimento vermelho até o valor atual */
+.volume-slider::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: var(--volume-fill, 70%);
+  background: linear-gradient(90deg, var(--accent), var(--accent));
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* thumb acima da camada de preenchimento */
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: none;
+  margin-top: -5px; /* centraliza verticalmente */
+  z-index: 2;
+  position: relative;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+/* Webkit track transparente para deixar o ::before visível */
+.volume-slider::-webkit-slider-runnable-track {
+  height: 8px;
+  background: transparent;
+  border-radius: 9999px;
+}
+
+/* Firefox: usar progress nativo */
+.volume-slider::-moz-range-track {
+  height: 8px;
+  background: var(--bg-dark);
+  border-radius: 9999px;
+}
+.volume-slider::-moz-range-progress {
+  background: var(--accent);
+  height: 8px;
+  border-radius: 9999px;
+}
+.volume-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--accent);
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+/* Edge/IE fallback */
+.volume-slider::-ms-fill-lower { background: var(--accent); }
+.volume-slider::-ms-fill-upper { background: var(--bg-dark); }
+.volume-slider::-ms-thumb {
+  width: 18px; height: 18px; background: var(--accent); border-radius: 50%;
+}
+
+/* Volume Button */
+.volume-button {
+  background: none;
+  border: none;
+  color: #c4242a;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  transition: color 0.2s;
+}
+
+.volume-button:active,
+.volume-button:hover {
+  color: #fff;
+}
+
+/* Ícones de volume */
+.volume-button svg {
+  color: var(--accent);
+  fill: var(--accent);
+  font-size: 20px;
+}
+
+/* History Section */
+.history-section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  overflow: hidden;
+  background: #181818;
+  min-height: 0; /* permite que filhos flex com overflow funcionem corretamente */
+}
+
+.history-title {
+  text-transform: uppercase;
+  letter-spacing: 0.1em; /* tracking-wider */
+  text-align: center;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.history-list {
+  flex-grow: 1;
+  flex: 1 1 auto;
+  min-height: 0; /* permissivo para overflow em flex containers */
+  overflow-y: auto;
+  padding-right: 8px; /* pr-2 */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Pequeno ajuste visual para scrollbar */
+.history-list::-webkit-scrollbar { width: 8px; }
+.history-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 8px; }
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--panel-contrast);
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background .15s ease;
+}
+
+.history-item:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+.history-album-art {
+  width: 48px; /* w-12 */
+  height: 48px;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  background: #232323;
+}
+
+.history-album-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #232323;
+}
+
+.history-song-info {
+  overflow: hidden;
+}
+
+.history-song-title {
+  font-weight: 600;
+  line-height: 1.25; /* leading-tight */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #fff;
+}
+
+.history-song-artist {
+  font-size: 0.875rem; /* text-sm */
+  color: #ccc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Footer Links */
+.player-footer {
+  padding: 16px;
+  border-top: 1px solid #232323;
+  flex-shrink: 0;
+  background: #181818;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.footer-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.footer-link span {
+  color: #fff;
+  margin-top: 4px;
+  font-size: 0.75rem; /* text-xs */
+}
+
+/* Super Player Styles */
+#superPlayer {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 350px;
+  height: 100%;
+  background: #121212;
+  box-shadow: -3px 0px 0px rgba(50,50,50,0.1);
+  z-index: 100;
+  transition: right 0.3s;
+}
+
+@media (max-width: 768px) {
+  #superPlayer { width: 250px; }
+}
+
+#superPlayer .imgPlayerCapa.background {
+  width: 100%;
+  height: 50%;
+  opacity: 1;
+  overflow: hidden;
+  border-bottom: solid 1px #121212;
+  background: #000;
+}
+
+#superPlayer .imgPlayerCapa.background img {
+  width: 100%;
+  height: 100%;
+  filter: blur(20px);
+  opacity: 0.2;
+  transform: scale(1.2);
+}
+
+#superPlayer .contentPlayer {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  width: 100%;
+  height: 150px;
+}
+
+#superPlayer .contentPlayer .containerImg {
+  width: 270px;
+  margin: 25px auto;
+  height: 270px;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  #superPlayer .contentPlayer .containerImg { width: 170px; height: 170px; }
+}
+
+#superPlayer .contentPlayer .imgPlayCapa {
+  width: 100%;
+  background: #121212;
+  height: 100%;
+  display: block;
+  position: relative;
+  z-index: 2;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+#superPlayer .contentPlayer .imgPlayCapa img {
+  width: 100%;
+  height: 100%;
+}
+
+#superPlayer .contentPlayer .diskRotate {
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  left: 50%;
+  bottom: -90px;
+  margin-left: -125px;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  #superPlayer .contentPlayer .diskRotate { width: 150px; height: 150px; margin-left: -75px; }
+}
+
+#superPlayer .contentPlayer .diskRotate img {
+  width: 100%;
+  height: 100%;
+  animation: rotation 2s infinite linear;
+}
+
+@keyframes rotation {
+  from { transform: rotate(0deg);}
+  to { transform: rotate(359deg);}
+}
+
+#superPlayer .contentPlayer .statusStream {
+  position: absolute;
+  width: 100%;
+  bottom: -115px;
+  left: 0;
+  z-index: 2;
+  padding: 0 25px;
+  text-align: center;
+}
+
+#superPlayer .nowPlaying {
+  font-family: 'bebas_neueregular', Arial, sans-serif;
+  font-size: 17px;
+  text-transform: uppercase;
+  text-align: center;
+  display: block;
+  margin-bottom: 20px;
+}
+
+/* Texto "TOCANDO AGORA" acima da capa */
+.now-playing-label {
+  width: 100%;
+  text-align: center;
+  font-family: 'Bebas Neue', Arial, sans-serif;
+  font-size: 1.45rem;
+  letter-spacing: 0.08em;
+  color: #fff;
+  margin-bottom: 8px;
+  margin-top: 0;
+  text-transform: uppercase;
+  font-weight: 800;
+  text-shadow: 0 2px 8px #000a;
+  line-height: 1.1;
+}
+
+.playPause {
+  background: #121212;
+  border-radius: 50%;
+  display: block;
+  position: relative;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  margin: -34px auto 0 auto;
+  padding: 5px;
+  text-align: center;
+  font-size: 70px;
+  color: #c4242a;
+}
+
+.playPause i {
+  display: none;
+  color: #c4242a;
+  font-size: 70px;
+}
+
+.playPause.stoped .fa-play-circle { display: block; }
+.playPause.playing .fa-pause-circle { display: block; }
+
+.lastMusics {
+  font-family: 'bebas_neueregular', Arial, sans-serif;
+  font-size: 17px;
+  text-transform: uppercase;
+  text-align: center;
+  display: block;
+  margin: 10px 0px;
+}
+
+.lastMusics span {
+  font-size: 12px;
+  text-transform: none;
+  display: block;
+}
+
+.statusTitle {
+  font-size: 12px;
+  opacity: 0.8;
+  display: block;
+}
+
+.linksPlayrs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.linksPlayrs li {
+  display: inline-block;
+  position: relative;
+}
+
+.linksPlayrs li a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #191919;
+  text-align: center;
+  display: block;
+  line-height: 75px;
+  transition-duration: 0.3s;
+  font-size: 21px;
+  margin: 10px 0px;
+}
+
+.linksPlayrs li a:hover {
+  opacity: 0.3;
+  transition-duration: 0.3s;
+}
+
+.linksPlayrs li a i {
+  color: #fff;
+  position: relative;
+  top: 1px;
+}
+
+#superPlayer #slider {
+  background: #191919;
+  width: 250px;
+  height: 8px;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  margin-left: -125px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+}
+
+@media (max-width: 768px) {
+  #superPlayer #slider { width: 150px; margin-left: -75px; bottom: 150px; }
+}
+
+#superPlayer #slider input[type="range"] {
+  width: 70%;
+  accent-color: #c4242a;
+  background: transparent;
+  border-radius: 5px;
+  height: 8px;
+}
+
+#superPlayer #slider .fa-volume-down,
+#superPlayer #slider .fa-volume-up {
+  font-size: 18px;
+  color: #c4242a;
+  cursor: pointer;
+}
+
+.closeOpenPlay {
+  background: #c4242a;
+  padding: 13px 15px;
+  position: absolute;
+  top: 20px;
+  left: -50px;
+  border-radius: 5px 0 0 5px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.closeOpenPlay i {
+  display: none;
+  font-size: 20px;
+  color: #fff;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.closeOpenPlay.closed .equalizericon { display: block; }
+.closeOpenPlay.open .fa-times { display: block; }
+
+.equalizer,
+.equalizer::before,
+.equalizer::after {
+  animation: equalize 1.25s steps(25, end) 0s infinite;
+}
+
+.equalizer {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-left: -2px;
+  width: 5px;
+  height: 20px;
+  background: #fff;
+  animation-name: equalize;
+}
+
+.equalizer:before {
+  display: block;
+  position: absolute;
+  width: 5px;
+  height: 20px;
+  background: #fff;
+  content: ' ';
+  left: -8px;
+  bottom: 0;
+  animation-name: equalizeBefore;
+}
+
+.equalizer:after {
+  display: block;
+  position: absolute;
+  width: 5px;
+  height: 20px;
+  background: #fff;
+  content: ' ';
+  right: -8px;
+  bottom: 0;
+  animation-name: equalizeAfter;
+}
+
+@keyframes equalize {
+  0% { height: 20px;} 10% { height: 12px;} 20% { height: 6px;} 30% { height: 20px;} 40% { height: 8px;}
+  50% { height: 14px;} 60% { height: 8px;} 70% { height: 16px;} 80% { height: 10px;} 90% { height: 18px;} 100% { height: 20px;}
+}
+
+@keyframes equalizeBefore {
+  0% { height: 0px;} 12% { height: 5px;} 22% { height: 2px;} 32% { height: 12px;} 44% { height: 8px;}
+  55% { height: 18px;} 63% { height: 14px;} 72% { height: 16px;} 81% { height: 10px;} 90% { height: 8px;} 100% { height: 0px;}
+}
+
+@keyframes equalizeAfter {
+  0% { height: 20px;} 20% { height: 12px;} 40% { height: 6px;} 60% { height: 20px;} 80% { height: 8px;} 100% { height: 20px;}
+}
+
+/* Recent tracks */
+#superPlayer .cc_recenttracks_list {
+  height: 25%;
+  overflow-y: scroll;
+  margin: 0 25px;
+}
+
+@media (max-height: 800px) {
+  #superPlayer .cc_recenttracks_list { height: 20%; }
+}
+
+#superPlayer .cc_recenttracks_list .cctrack {
+  background: #191919;
+  margin: 5px;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+#superPlayer .cc_recenttracks_list .cctrack .cccover {
+  width: 50px;
+  height: 50px;
+  display: block;
+  overflow: hidden;
+  border-radius: 5px;
+  border: none;
+}
+
+#superPlayer .cc_recenttracks_list .cctrack .cccover img {
+  width: 100%;
+  height: 100%;
+}
+
+#superPlayer .cc_recenttracks_list::-webkit-scrollbar-track {
+  background-color: #121212;
+}
+
+#superPlayer .cc_recenttracks_list::-webkit-scrollbar {
+  width: 3px;
+  background-color: #121212;
+}
+
+#superPlayer .cc_recenttracks_list::-webkit-scrollbar-thumb {
+  background-color: #121212;
+}
+
+/* Sidebar Player - Aparência inspirada no app de referência */
+.sidebar-player {
+  background: #121212;
+  color: #fff;
+  width: 100%;
+  min-width: 250px;
+  max-width: 350px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: -3px 0 0 rgba(50,50,50,0.1);
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 100;
+}
+
+.sidebar-player .player-cover {
+  width: 120px;
+  height: 120px;
+  margin: 32px auto 16px auto;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #191919;
+  box-shadow: 0 2px 8px #0002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sidebar-player .player-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sidebar-player .player-title {
+  font-family: 'bebas_neueregular', Arial, sans-serif;
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 8px 0 0 0;
+  font-weight: bold;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-player .player-artist {
+  font-size: 1rem;
+  color: #ccc;
+  text-align: center;
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-player .player-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin: 16px 0 8px 0;
+}
+.sidebar-player .player-btn {
+  background: none;
+  border: none;
+  color: #c4242a;
+  font-size: 2.5rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.sidebar-player .player-btn:active,
+.sidebar-player .player-btn:hover {
+  color: #fff;
+}
+
+.sidebar-player .player-volume {
+  width: 80%;
+  margin: 0 auto 8px auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sidebar-player .player-volume input[type="range"] {
+  flex: 1;
+  accent-color: #c4242a;
+  height: 4px;
+  border-radius: 2px;
+  background: #191919;
+}
+
+.sidebar-player .player-volume-value {
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.sidebar-player .player-history-title {
+  font-family: 'bebas_neueregular', Arial, sans-serif;
+  font-size: 1.1rem;
+  margin: 18px 0 8px 0;
+  color: #fff;
+  text-align: left;
+  width: 80%;
+  letter-spacing: 1px;
+}
+
+.sidebar-player .player-history-list {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.sidebar-player .player-history-item {
+  background: #191919;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 1px 4px #0002;
+}
+.sidebar-player .player-history-item .history-cover {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #222;
+  flex-shrink: 0;
+}
+.sidebar-player .player-history-item .history-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.sidebar-player .player-history-item .history-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.sidebar-player .player-history-item .history-title {
+  font-size: 1rem;
+  color: #fff;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sidebar-player .player-history-item .history-artist {
+  font-size: 0.95rem;
+  color: #ccc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+  .sidebar-player {
+    min-width: 220px;
+    max-width: 260px;
+  }
+  .sidebar-player .player-cover {
+    width: 80px;
+    height: 80px;
+  }
+  .sidebar-player .player-history-list {
+    width: 95%;
+  }
+}
+
+/* Regras específicas do player movidas de style.css */
+
+.web-player {
+    height: 100%;
+    color: #fff;
+    padding: 5px;
+    position: relative;
+    z-index: 3;
+    margin-top: 25px;
+}
+
+.cover-album {
+    max-width: 80%;
+    margin: auto;
+    background: url('../img/cover.png') no-repeat;
+    background-size: cover;
+    border: 2px solid #fefefe;
+    box-shadow: 0px 5px 10px 3px rgba(0, 0, 0, 0.4);
+    transition: background-image 1s;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+#currentCoverArt {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    transition: background-image 1s;
+}
+
+.logo {
+    display: none;
+}
+
+.info-current-song {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+}
+
+.info-current-song h2 {
+    font-size: 46px;
+    text-transform: uppercase;
+    font-weight: 800;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.info-current-song h3 {
+    font-size: 22px;
+    font-weight: 600;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.current-song,
+.current-artist {
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.play-pause {
+    font-size: 65px; 
+    color: white; 
+}
+
+.play-pause i {
+    cursor: pointer;
+    color: white; 
+}
+
+.volume-icon {
+    font-size: 28px;
+    margin-top: -5px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    border: none;
+}
+
+.volume-slide {
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.volume-control {
+    display: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.volume-slide input[type="range"] {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    outline: none;
+    border-radius: 5px;
+    border: none;
+}
+
+.percentual-volume {
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    border: none;
+}
+
+.vagalume a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.lyrics {
+    text-transform: uppercase;
+    text-decoration: underline;
+    color: #fff;
+    font-size: 1em;
+    font-weight: 400;
+    outline: none;
+    transition: .3s;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+}
+.lyrics:active,
+.lyrics:visited {
+    text-decoration: none;
+    color: #fff;
+}
+
+.modal-content {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff !important;
+    border-radius: 20px;
+}
+.modal-content .btn {
+    border-radius: 20px;
+    background-color: #00E1E7;
+}
+
+/* Chrome */
+input[type=range] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: transparent;
+    width: 100%;
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    animation: 0.2s;
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    background: #fff;
+}
+input[type=range]::-webkit-slider-thumb {
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -8px;
+}
+/* Firefox */
+input[type=range]::-moz-range-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    animation: 0.2s;
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    background: #fff;
+}
+input[type=range]::-moz-range-thumb {
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    border: 0px solid #000000;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+}
+/* IE e Edge */
+input[type=range]::-ms-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    animation: 0.2s;
+    background: transparent;
+    border-color: transparent;
+    border-width: 10px 0;
+    top: -10px;
+    color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+    background: #fff;
+    border: 0px solid #000101;
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+}
+input[type=range]::-ms-fill-upper {
+    background: #fff;
+    border: 0px solid #000101;
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+}
+input[type=range]::-ms-thumb {
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    border: 0px solid #000000;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+}
+
+.historic h2 {
+    color: #fefefe;
+    border-bottom: 2px solid #fefefe;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 10px 0;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);   
+}
+
+.historic article {
+    margin: 5px 0;
+    padding: 10px;
+    background-color: none;
+}
+
+.historic .cover-historic { 
+    width: 95px;
+    height: 95px;
+    margin-right: 15px;
+    float: left;
+    border-radius: 10px;
+    background: url('../img/cover.png') no-repeat;
+    background-size: cover;
+    border: 2px solid #fefefe;
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background-image 1s;
+}
+
+.historic .music-info {
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.historic .music-info .song {
+    width: 100%;
+    font-weight: bold;
+    font-size: 20px;
+    text-transform: uppercase;
+    margin-bottom: -5px;
+    color: white;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+@media(max-width: 370px) {
+    .cover-album {
+        max-width: 100%;
+    }
+}
+
+@media(min-width: 576px) {
+    .volume-control {
+        display: flex;
+    }
+    .call-lyrics {
+        margin-top: 20px;
+    }
+}
+
+@media(min-width: 768px) {
+    body {
+        align-items: center;
+    }
+    .h1-logo {
+        text-align: center;
+    }
+    .logo {
+        display: block;
+        z-index: 2;
+    }
+    .logo img {
+        max-width: 200px;
+    }
+    .web-player {
+        height: auto;
+    }
+    .cover-album {
+        margin: 10px auto;
+        min-width: 320px;
+        height: 320px;
+    }
+    .logo img {
+        max-width: 300px;
+        margin: 65px 0;
+    }
+    .info-current-song {
+        margin-top: 20px;
+        text-align: left;
+    }
+    .volume-control {
+        margin-top: 10%;
+    }
+}
+
+/* botão sobre a capa (overlay) continua funcionando se colocado dentro do container */
+.album-art-container .play-pause-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 68px;
+  height: 68px;
+  background-color: var(--accent);
+  color: #fff;
+  border-radius: 9999px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+}
+.album-art-container:hover .play-pause-button {
+  opacity: 1;
+}
+
+/* botão na posição inline (abaixo do título) */
+.play-control-inline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+/* Botão play/pause redondo, vermelho, centralizado, sombra leve */
+.play-pause-button.inline {
+  position: relative;
+  transform: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  opacity: 1;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  background: #b71c1c; /* vermelho escuro, ajuste se quiser igual ao da imagem */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  padding: 0;
+}
+
+/* Ícones SVG pretos */
+.play-pause-button.inline svg#play-icon,
+.play-pause-button.inline svg#pause-icon {
+  width: 28px;
+  height: 28px;
+  display: block;
+  fill: #111;
+  stroke: #111;
+  color: #111;
+}
+
+/* Esconde SVG não ativo (JS já faz isso, mas reforça) */
+.play-pause-button.inline svg#play-icon[style*="display: none"],
+.play-pause-button.inline svg#pause-icon[style*="display: none"] {
+  display: none !important;
+}
+
+/* Remove borda e sombra extra do botão antigo */
+.play-pause-button.inline:focus {
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+#player-container.collapsed {
+  width: 48px;
+  overflow: visible;
+  transition: width 0.28s ease-in-out;
+}
+
+/* Ocultar seções internas ao minimizar (mantém o botão) */
+#player-container.collapsed .player-content,
+#player-container.collapsed .history-section,
+#player-container.collapsed .player-footer,
+#player-container.collapsed .player-toggle-btn {
+  display: none !important;
+}
+
+/* Ajuste para mostrar somente o botão quando colapsado */
+#player-container.collapsed .player-hide-btn {
+  display: flex;
+  left: 8px;
+  top: 8px;
+}
+
+/* Quando o player principal está minimizado, escondemos a sidebar para evitar duplicatas */
+.sidebar-player.hidden-by-main {
+  display: none !important;
+}
+/* Ocultar seções internas ao minimizar (mantém o botão) */
+#player-container.collapsed .player-content,
+#player-container.collapsed .history-section,
+#player-container.collapsed .player-footer,
+#player-container.collapsed .player-toggle-btn {
+  display: none !important;
+}
+
+/* Ajuste para mostrar somente o botão quando colapsado */
+#player-container.collapsed .player-hide-btn {
+  display: flex;
+  left: 8px;
+  top: 8px;
+}
+
+/* Quando o player principal está minimizado, escondemos a sidebar para evitar duplicatas */
+.sidebar-player.hidden-by-main {
+  display: none !important;
+}
+
+/* botão sobre a capa (overlay) continua funcionando se colocado dentro do container */
+.album-art-container .play-pause-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 68px;
+  height: 68px;
+  background-color: var(--accent);
+  color: #fff;
+  border-radius: 9999px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+}
+.album-art-container:hover .play-pause-button {
+  opacity: 1;
+}
+
+/* botão na posição inline (abaixo do título) */
+.play-control-inline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+/* Botão play/pause redondo, vermelho, centralizado, sombra leve */
+.play-pause-button.inline {
+  position: relative;
+  transform: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  opacity: 1;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  background: #b71c1c; /* vermelho escuro, ajuste se quiser igual ao da imagem */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  padding: 0;
+}
+
+/* Ícones SVG pretos */
+.play-pause-button.inline svg#play-icon,
+.play-pause-button.inline svg#pause-icon {
+  width: 28px;
+  height: 28px;
+  display: block;
+  fill: #111;
+  stroke: #111;
+  color: #111;
+}
+
+/* Esconde SVG não ativo (JS já faz isso, mas reforça) */
+.play-pause-button.inline svg#play-icon[style*="display: none"],
+.play-pause-button.inline svg#pause-icon[style*="display: none"] {
+  display: none !important;
+}
+
+/* Remove borda e sombra extra do botão antigo */
+.play-pause-button.inline:focus {
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+.play-control-inline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 12px 0 0 0;
+}
+
+.play-pause-button.inline {
+  /* Remover fundo e sombra, aumentar tamanho */
+  background: none !important;
+  box-shadow: none !important;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.play-pause-button.inline img {
+  width: 64px;
+  height: 64px;
+  display: block;
+  margin: 0 auto;
+  pointer-events: none;
+}
+.btn-play-circle {
+    font-size: 20px; 
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    align-items: center;
+    justify-content: center;
+    transition: transform .2s;
+    box-shadow: 1px 3px #30303022;
+    padding: 10px 20px; 
+}
+.btn-play-circle:focus {outline:0;}
+.btn-play-circle:hover {
+    box-shadow: 1px 5px #30303022;
+    transform: scale(1.1);
+}
+
+.fa-play-circle { 
+    color: white; 
+}
+.fa-pause-circle { 
+    color: white;
+}
+
+.close{
+    color: white;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+.fade-in {
+    opacity: 1;
+    transition: opacity 0.5s ease-in;
+}
+
+/* Botão para minimizar/expandir o player (topo esquerdo) */
+.player-hide-btn {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.32);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 10010;
+  transition: background .2s, transform .15s;
+  font-size: 16px;
+}
+.player-hide-btn:hover { background: rgba(0,0,0,0.45); transform: translateY(-1px); }
+
+/* Estado minimizado: reduzir largura e ocultar conteúdo, mantendo o botão visível */
+#player-container.collapsed {
+  width: 48px;
+  overflow: visible;
+  transition: width 0.28s ease-in-out;
+}
+
+/* Ocultar seções internas ao minimizar (mantém o botão) */
+#player-container.collapsed .player-content,
+#player-container.collapsed .history-section,
+#player-container.collapsed .player-footer,
+#player-container.collapsed .player-toggle-btn {
+  display: none !important;
+}
+
+/* Ajuste para mostrar somente o botão quando colapsado */
+#player-container.collapsed .player-hide-btn {
+  display: flex;
+  left: 8px;
+  top: 8px;
+}
+
+/* Quando o player principal está minimizado, escondemos a sidebar para evitar duplicatas */
+.sidebar-player.hidden-by-main {
+  display: none !important;
+}
+/* Ocultar seções internas ao minimizar (mantém o botão) */
+#player-container.collapsed .player-content,
+#player-container.collapsed .history-section,
+#player-container.collapsed .player-footer,
+#player-container.collapsed .player-toggle-btn {
+  display: none !important;
+}
+
+/* Ajuste para mostrar somente o botão quando colapsado */
+#player-container.collapsed .player-hide-btn {
+  display: flex;
+  left: 8px;
+  top: 8px;
+}
+
+/* Quando o player principal está minimizado, escondemos a sidebar para evitar duplicatas */
+.sidebar-player.hidden-by-main {
+  display: none !important;
+}
+
+/* botão sobre a capa (overlay) continua funcionando se colocado dentro do container */
+.album-art-container .play-pause-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 68px;
+  height: 68px;
+  background-color: var(--accent);
+  color: #fff;
+  border-radius: 9999px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+}
+.album-art-container:hover .play-pause-button {
+  opacity: 1;
+}
+
+/* botão na posição inline (abaixo do título) */
+.play-control-inline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+/* Botão play/pause redondo, vermelho, centralizado, sombra leve */
+.play-pause-button.inline {
+  position: relative;
+  transform: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  opacity: 1;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  background: #b71c1c; /* vermelho escuro, ajuste se quiser igual ao da imagem */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  padding: 0;
+}
+
+/* Ícones SVG pretos */
+.play-pause-button.inline svg#play-icon,
+.play-pause-button.inline svg#pause-icon {
+  width: 28px;
+  height: 28px;
+  display: block;
+  fill: #111;
+  stroke: #111;
+  color: #111;
+}
+
+/* Esconde SVG não ativo (JS já faz isso, mas reforça) */
+.play-pause-button.inline svg#play-icon[style*="display: none"],
+.play-pause-button.inline svg#pause-icon[style*="display: none"] {
+  display: none !important;
+}
+
+/* Remove borda e sombra extra do botão antigo */
+.play-pause-button.inline:focus {
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
