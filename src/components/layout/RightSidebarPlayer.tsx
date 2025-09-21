@@ -10,7 +10,8 @@ import { cn } from "@/lib/utils";
 
 // URLs e constantes da API
 const STREAM_URL = "https://stream.zeno.fm/cbzw2rbebfkuv";
-const API_URL = `/api/stream-info`;
+const API_URL = `https://twj.es/free/?url=${STREAM_URL}`;
+const FALLBACK_API_URL = `https://twj.es/metadata/?url=${STREAM_URL}`;
 const DEFAULT_COVER_ART = "/img/cover.png";
 
 interface SongData {
@@ -79,19 +80,22 @@ export function RightSidebarPlayer() {
         audioRef.current.play().catch(e => console.error("Autoplay was prevented:", e));
     }
     
-    const fetchStreamingData = async (): Promise<any> => {
+    const fetchStreamingData = async (url: string): Promise<any> => {
       try {
-        const response = await fetch(API_URL);
+        const response = await fetch(url);
         if (!response.ok) return null;
         return await response.json();
       } catch (error) {
-        console.error(`Error fetching streaming data from ${API_URL}:`, error);
+        console.error(`Error fetching streaming data from ${url}:`, error);
         return null;
       }
     };
 
     const updateSongData = async () => {
-      let data = await fetchStreamingData();
+      let data = await fetchStreamingData(API_URL);
+      if (!data || data.error || !data.song) {
+        data = await fetchStreamingData(FALLBACK_API_URL);
+      }
       if (data) {
         const songTitle = data.songtitle || (typeof data.song === "object" ? data.song.title : data.song) || "Música Desconhecida";
         const artistName = (typeof data.artist === "object" ? data.artist.title : data.artist) || "Artista Desconhecido";
