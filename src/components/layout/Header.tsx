@@ -26,19 +26,19 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 bg-card/95 backdrop-blur-sm">
-      <div className="container mx-auto flex h-24 items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-3" prefetch={false}>
+      <div className="container mx-auto flex h-24 items-center justify-between px-4 gap-4">
+        <Link href="/" className="flex items-center gap-3 flex-shrink-0" prefetch={false}>
           <Logo className="w-16 h-auto" />
         </Link>
         
-        <nav className="hidden lg:flex items-center justify-center gap-1 absolute left-1/2 -translate-x-1/2">
+        <nav className="hidden lg:flex items-center justify-center gap-1 w-full">
           {navLinks.map((link) => (
             <Button
               key={link.href}
               variant="ghost"
               asChild
               className={cn(
-                "font-medium text-lg uppercase hover:border-primary hover:bg-transparent rounded-none transition-all duration-300 px-4",
+                "font-medium text-base uppercase hover:border-primary hover:bg-transparent rounded-none transition-all duration-300 px-3",
                 pathname === link.href ? "text-primary border-b-4 border-primary" : "text-foreground border-b-4 border-transparent"
               )}
             >
@@ -49,7 +49,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-shrink-0">
             <div className="hidden md:flex items-center gap-1">
                  <Button variant="ghost" size="icon" asChild className="rounded-full hover:bg-primary/20">
                     <a href="#" target="_blank"><Facebook /></a>
