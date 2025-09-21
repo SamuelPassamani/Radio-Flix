@@ -28,7 +28,7 @@ export function Header() {
     <header className="sticky top-0 z-40 bg-card/95 backdrop-blur-sm">
       <div className="container mx-auto flex h-24 items-center justify-between px-4 gap-4">
         <Link href="/" className="flex items-center gap-3 flex-shrink-0" prefetch={false}>
-          <Logo className="w-16 h-auto" />
+          <Logo className="w-24 h-auto" />
         </Link>
         
         <nav className="hidden lg:flex items-center justify-center gap-1 w-full">
