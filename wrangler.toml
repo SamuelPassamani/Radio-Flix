@@ -1,0 +1,10 @@
+name = "radio-flix"
+main = "worker.js"
+compatibility_date = "2024-06-01"
+
+[site]
+bucket = "./out"
+entry-point = "."
+
+[build]
+command = "npm run build && npm run export"
