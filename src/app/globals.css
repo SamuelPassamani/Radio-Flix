@@ -2,55 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-image: url('https://webradio.hoost.com.br/test-drive/soundpro/files/2023/07/321sd.jpg');
+  background-attachment: fixed;
+  background-position: top center;
+}
+
 @layer base {
   :root {
-    --background: 0 0% 7.5%; /* #131313 */
+    --background: 0 0% 7%;
     --foreground: 0 0% 98%;
-    --card: 0 0% 10%; /* Slightly lighter than background */
+    --card: 0 0% 10%;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 7.5%;
+    --popover: 0 0% 10%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 100% 50%; /* Deep Crimson - #8B0000 -> HSL(0, 100%, 27%) is too dark, using a brighter red */
+    --primary: 357 69% 45%; /* #c4242a */
     --primary-foreground: 0 0% 98%;
-    --secondary: 270 50% 50%; /* Dark Magenta - #8B008B -> HSL(300, 100%, 27%) is too dark, using a brighter purple */
+    --secondary: 0 0% 15%;
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 63.9%;
-    --accent: 270 50% 50%; /* Using secondary as accent */
+    --accent: 357 69% 45%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 0 100% 50%;
-    --radius: 0.5rem;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 357 69% 45%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --radius: 0.5rem;
   }
-
   .dark {
-     --background: 0 0% 7.5%; /* #131313 */
+    --background: 0 0% 7%;
     --foreground: 0 0% 98%;
-    --card: 0 0% 10%; /* Slightly lighter than background */
+    --card: 0 0% 10%;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 7.5%;
+    --popover: 0 0% 10%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 70% 45%; /* #C22020 - A slightly brighter crimson */
+    --primary: 357 69% 45%; /* #c4242a */
     --primary-foreground: 0 0% 98%;
-    --secondary: 300 70% 45%; /* #C220C2 - A slightly brighter magenta */
+    --secondary: 0 0% 15%;
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 63.9%;
-    --accent: 300 70% 45%; /* Using secondary as accent */
+    --accent: 357 69% 45%;
     --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 0 70% 45%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 357 69% 45%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
   }
 }
 
@@ -61,4 +72,25 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary));
+  border-radius: 10px;
+  border: 2px solid hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.8);
 }
