@@ -74,12 +74,19 @@ export function RightSidebarPlayer() {
   const currentSongTitleRef = useRef<string | null>(null);
 
   useEffect(() => {
-    // Tenta dar play automaticamente.
-    // Navegadores podem bloquear isso se o usuário não tiver interagido com a página.
-    if (audioRef.current) {
-        audioRef.current.play().catch(e => console.error("Autoplay was prevented:", e));
-    }
-    
+    // Tenta dar play automaticamente. Navegadores modernos podem bloquear isso
+    // até que o usuário interaja com a página.
+    const attemptAutoplay = async () => {
+      if (audioRef.current && audioRef.current.paused) {
+        try {
+          await audioRef.current.play();
+        } catch (error) {
+          console.log("Autoplay foi bloqueado pelo navegador. Aguardando interação do usuário.");
+        }
+      }
+    };
+    attemptAutoplay();
+
     const fetchStreamingData = async (url: string): Promise<any> => {
       try {
         const response = await fetch(url);
@@ -130,8 +137,8 @@ export function RightSidebarPlayer() {
   const togglePlay = () => {
     if (audioRef.current) {
       if (audioRef.current.paused) {
-        audioRef.current.load();
-        audioRef.current.play().catch(e => console.error("Play error:", e));
+        audioRef.current.load(); // Garante que o stream mais recente seja carregado
+        audioRef.current.play().catch(e => console.error("Erro ao tentar tocar o áudio:", e));
       } else {
         audioRef.current.pause();
       }
