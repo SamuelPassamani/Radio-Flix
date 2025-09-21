@@ -10,9 +10,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['Inter', 'sans-serif'],
-        headline: ['Space Grotesk', 'sans-serif'],
-        code: ['monospace'],
+        // Alterando as fontes para Poppins e Bebas Neue
+        sans: ['Poppins', 'sans-serif'],
+        headline: ['Bebas Neue', 'sans-serif'],
       },
       colors: {
         background: 'hsl(var(--background))',
@@ -100,7 +100,7 @@ export default {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'spin-slow': 'spin-slow 20s linear infinite',
+        'spin-slow': 'spin-slow 4s linear infinite',
       },
     },
   },

@@ -1,13 +1,34 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { news, schedule, topCharts } from "@/lib/data";
 import { ArrowRight, Youtube } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { podcasts } from "@/lib/data";
 import { MusicRequestForm } from "./requests/MusicRequestForm";
 import { Separator } from "@/components/ui/separator";
+
+// Arrays with the new image paths
+const newsImages = [
+  '/images/article-image-1.jpg',
+  '/images/article-image-2.jpg',
+  '/images/article-image-3.jpg',
+  '/images/article-image-4.jpg',
+];
+
+const galleryImages = [
+  '/images/article-image-1.jpg',
+  '/images/article-image-2.jpg',
+  '/images/article-image-3.jpg',
+  '/images/article-image-4.jpg',
+  '/images/article-image-5.jpg',
+  '/images/article-image-1.jpg',
+  '/images/article-image-2.jpg',
+  '/images/article-image-3.jpg',
+  '/images/article-image-4.jpg',
+];
+
 
 function WidgetContainer({ title, children, className }: { title: string, children: React.ReactNode, className?: string }) {
   return (
@@ -19,7 +40,6 @@ function WidgetContainer({ title, children, className }: { title: string, childr
 }
 
 export default function Home() {
-  const heroImage = PlaceHolderImages.find(p => p.id === 'hero-home');
   const latestNews = news.slice(0, 4);
   const latestBlog = news.slice(0, 3);
 
@@ -27,17 +47,14 @@ export default function Home() {
     <div className="flex flex-col gap-8">
       {/* Hero Section */}
       <section className="relative h-[60vh] min-h-[400px] w-full flex items-center justify-center text-center">
-        {heroImage && (
-          <Image
-            src={heroImage.imageUrl}
-            alt={heroImage.description}
-            fill
-            sizes="100vw"
-            className="object-cover"
-            data-ai-hint={heroImage.imageHint}
-            priority
-          />
-        )}
+        <Image
+          src="/images/hero-banner.png"
+          alt="Banner principal da rádio"
+          fill
+          sizes="100vw"
+          className="object-cover"
+          priority
+        />
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 flex flex-col items-start gap-4 px-4 max-w-6xl w-full mx-auto">
           <div className="border-l-8 border-primary pl-6">
@@ -74,29 +91,24 @@ export default function Home() {
        <div className="container mx-auto px-4 mt-8">
          <h2 className="text-xl font-bold font-headline border-b-4 border-primary pb-2 mb-4 uppercase">Últimas Noticias</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {latestNews.map((article) => {
-                  const articleImage = PlaceHolderImages.find(p => p.id === article.imageId);
-                  return (
+                {latestNews.map((article, index) => (
                      <Link href="/news" key={article.id} className="group flex flex-col bg-card hover:bg-muted/50 transition-colors rounded-lg overflow-hidden">
-                       {articleImage && (
                         <div className="relative w-full h-48 overflow-hidden">
                             <Image 
-                            src={articleImage.imageUrl}
-                            alt={articleImage.description}
+                            src={newsImages[index % newsImages.length]}
+                            alt={article.title}
                             fill
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                             className="object-cover"
-                            data-ai-hint={articleImage.imageHint}
                             />
                         </div>
-                       )}
                        <div className="p-4">
                             <h3 className="font-semibold group-hover:text-primary transition-colors leading-tight">{article.title}</h3>
                             <p className="text-sm text-muted-foreground mt-1">{article.date}</p>
                        </div>
                     </Link>
                   )
-                })}
+                )}
             </div>
       </div>
 
@@ -114,16 +126,15 @@ export default function Home() {
             </WidgetContainer>
              <WidgetContainer title="Galeria de fotos">
                 <div className="grid grid-cols-3 gap-2">
-                    {PlaceHolderImages.filter(p => p.id.startsWith('gallery-')).slice(0,9).map((image) => (
-                        <Link href="/gallery" key={image.id}>
+                    {galleryImages.map((image, index) => (
+                        <Link href="/gallery" key={index}>
                             <div className="relative aspect-square w-full overflow-hidden rounded-md group border-2 border-transparent hover:border-primary">
                                 <Image
-                                src={image.imageUrl}
-                                alt={image.description}
+                                src={image}
+                                alt={`Imagem da galeria ${index + 1}`}
                                 fill
                                 sizes="(max-width: 1024px) 33vw, 10vw"
                                 className="object-cover"
-                                data-ai-hint={image.imageHint}
                                 />
                             </div>
                         </Link>
@@ -144,30 +155,24 @@ export default function Home() {
              </WidgetContainer>
              <WidgetContainer title="Últimas do blog">
                 <div className="space-y-6">
-                    {latestBlog.map((article) => {
-                        const articleImage = PlaceHolderImages.find(p => p.id === article.imageId);
-                        return (
-                            <Card key={article.id} className="overflow-hidden group flex flex-col md:flex-row">
-                                {articleImage && (
-                                    <div className="relative aspect-video md:aspect-square w-full md:w-1/3 overflow-hidden">
-                                    <Image
-                                        src={articleImage.imageUrl}
-                                        alt={article.title}
-                                        fill
-                                        sizes="(max-width: 768px) 100vw, 33vw"
-                                        className="object-cover"
-                                        data-ai-hint={articleImage.imageHint}
-                                    />
-                                    </div>
-                                )}
-                                <div className="p-6 flex flex-col justify-center md:w-2/3">
-                                    <CardTitle className="text-xl group-hover:text-primary transition-colors">{article.title}</CardTitle>
-                                    <CardDescription className="mt-2">{article.date}</CardDescription>
-                                    <p className="text-muted-foreground mt-4 text-sm line-clamp-3">{article.content}</p>
-                                </div>
-                            </Card>
-                        )
-                    })}
+                    {latestBlog.map((article, index) => (
+                        <Card key={article.id} className="overflow-hidden group flex flex-col md:flex-row">
+                            <div className="relative aspect-video md:aspect-square w-full md:w-1/3 overflow-hidden">
+                            <Image
+                                src={newsImages[index % newsImages.length]}
+                                alt={article.title}
+                                fill
+                                sizes="(max-width: 768px) 100vw, 33vw"
+                                className="object-cover"
+                            />
+                            </div>
+                            <div className="p-6 flex flex-col justify-center md:w-2/3">
+                                <CardTitle className="text-xl group-hover:text-primary transition-colors">{article.title}</CardTitle>
+                                <CardDescription className="mt-2">{article.date}</CardDescription>
+                                <p className="text-muted-foreground mt-4 text-sm line-clamp-3">{article.content}</p>
+                            </div>
+                        </Card>
+                    ))}
                 </div>
              </WidgetContainer>
           </div>

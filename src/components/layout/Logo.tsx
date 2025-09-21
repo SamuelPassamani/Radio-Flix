@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
-import Image from "next/image";
+import Image, { ImageProps } from "next/image";
 
-export function Logo({ className, ...props }: React.ComponentProps<typeof Image>) {
+export function Logo({ className, ...props }: Omit<ImageProps, 'src' | 'alt'> & { src?: string; alt?: string }) {
   return (
     <Image
       src="https://cdn.xcam.gay/10:/R%C3%A1dio%20Flix/logo/logo.svg"

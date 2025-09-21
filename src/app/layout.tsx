@@ -19,10 +19,11 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        {/* Removendo as fontes antigas e adicionando as novas */}
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
       </head>
-      <body className="font-body antialiased bg-background text-foreground min-h-screen">
+      {/* O ideal seria definir as novas fontes no tailwind.config.js, mas por simplicidade vamos manter o body como está por enquanto */}
+      <body className="font-sans antialiased bg-background text-foreground min-h-screen">
         <div className="relative flex min-h-screen flex-col">
           <Header />
           <main className="flex-1">
