@@ -1,4 +1,3 @@
-
 {
   "placeholderImages": [
     {
@@ -132,4 +131,5 @@
     { "id": "podcast-5", "description": "A stack of vinyl records", "imageUrl": "https://picsum.photos/seed/305/400/400", "imageHint": "vinyl records" },
     { "id": "podcast-6", "description": "Abstract synthesizer waves", "imageUrl": "https://picsum.photos/seed/306/400/400", "imageHint": "synth waves" }
   ]
+}
 }

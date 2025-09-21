@@ -1,7 +1,11 @@
 import type { NextConfig } from 'next';
 
+const repo = 'Radio-Flix'; // nome do seu repositório
+
 const nextConfig: NextConfig = {
-  /* config options here */
+  output: "export",
+  basePath: `/${repo}`,
+  assetPrefix: `/${repo}/`,
   images: {
     remotePatterns: [
       {
@@ -23,6 +27,7 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       }
     ],
+    unoptimized: true, // importante para exportação estática
   },
 };
 
