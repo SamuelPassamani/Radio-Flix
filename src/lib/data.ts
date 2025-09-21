@@ -1,4 +1,9 @@
 export const sliderData = [
+  { id: 1, imageId: 'slider1', title: 'Slide 1', link: '#' },
+  { id: 2, imageId: 'slider2', title: 'Slide 2', link: '#' },
+  { id: 3, imageId: 'slider3', title: 'Slide 3', link: '#' },
+];
+export const sliderData = [
   {
     id: 1,
     imageId: "slider-1",
