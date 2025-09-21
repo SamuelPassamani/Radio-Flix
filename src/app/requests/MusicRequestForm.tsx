@@ -75,12 +75,15 @@ export function MusicRequestForm() {
   }, [state, toast, form]);
 
   return (
-    <Card className="bg-card/50 border-0 shadow-none">
+    <Card>
       <CardHeader>
-        <CardTitle className="font-headline text-primary uppercase text-center">Deixe seu recado</CardTitle>
-        <CardDescription className="text-center">
-          Para deixar seu recado preencha os campos abaixo:
-        </CardDescription>
+        <div className="flex items-center gap-4">
+          <Send className="h-8 w-8 text-primary" />
+          <div>
+            <CardTitle className="font-headline text-3xl">Request a Song</CardTitle>
+            <CardDescription>Let us know what you want to hear!</CardDescription>
+          </div>
+        </div>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -90,20 +93,22 @@ export function MusicRequestForm() {
               name="name"
               render={({ field }) => (
                 <FormItem>
+                  <FormLabel>Your Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Seu nome" {...field} />
+                    <Input placeholder="Enter your name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-             <FormField
+            <FormField
               control={form.control}
               name="song"
               render={({ field }) => (
                 <FormItem>
+                  <FormLabel>Song Title</FormLabel>
                   <FormControl>
-                    <Input placeholder="Nome da Música" {...field} />
+                    <Input placeholder="e.g., Bohemian Rhapsody" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -114,8 +119,9 @@ export function MusicRequestForm() {
               name="artist"
               render={({ field }) => (
                 <FormItem>
+                  <FormLabel>Artist</FormLabel>
                   <FormControl>
-                    <Input placeholder="Nome do Artista" {...field} />
+                    <Input placeholder="e.g., Queen" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -126,15 +132,16 @@ export function MusicRequestForm() {
               name="message"
               render={({ field }) => (
                 <FormItem>
+                  <FormLabel>Message (Optional)</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Mensagem" {...field} className="min-h-[60px]" />
+                    <Textarea placeholder="Dedicate this song or just say hi!" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={form.formState.isSubmitting} className="w-full uppercase">
-              {form.formState.isSubmitting ? "Enviando..." : "Enviar"}
+            <Button type="submit" disabled={form.formState.isSubmitting} className="w-full">
+              {form.formState.isSubmitting ? "Submitting..." : "Submit Request"}
             </Button>
           </form>
         </Form>

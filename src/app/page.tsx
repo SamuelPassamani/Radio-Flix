@@ -1,214 +1,211 @@
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { news, schedule, topCharts } from "@/lib/data";
-import { ArrowRight, Youtube } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { news, podcasts, schedule, topCharts } from "@/lib/data";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { ArrowRight, Mic, Music, Newspaper, Users, Video } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { podcasts } from "@/lib/data";
 import { MusicRequestForm } from "./requests/MusicRequestForm";
 import { Separator } from "@/components/ui/separator";
 
-// Arrays with the new image paths
-const newsImages = [
-  '/images/article-image-1.jpg',
-  '/images/article-image-2.jpg',
-  '/images/article-image-3.jpg',
-  '/images/article-image-4.jpg',
-];
-
-const galleryImages = [
-  '/images/article-image-1.jpg',
-  '/images/article-image-2.jpg',
-  '/images/article-image-3.jpg',
-  '/images/article-image-4.jpg',
-  '/images/article-image-5.jpg',
-  '/images/article-image-1.jpg',
-  '/images/article-image-2.jpg',
-  '/images/article-image-3.jpg',
-  '/images/article-image-4.jpg',
-];
-
-
-function WidgetContainer({ title, children, className }: { title: string, children: React.ReactNode, className?: string }) {
-  return (
-    <div className={className}>
-      <h3 className="text-xl font-bold font-headline border-b-4 border-primary pb-2 mb-4 uppercase">{title}</h3>
-      {children}
-    </div>
-  )
-}
-
 export default function Home() {
-  const latestNews = news.slice(0, 4);
-  const latestBlog = news.slice(0, 3);
+  const heroImage = PlaceHolderImages.find(p => p.id === 'hero-home');
+  const latestNews = news.slice(0, 3);
+  const todaysSchedule = schedule.find(day => day.day.toLowerCase() === new Date().toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase());
+  const featuredPodcast = podcasts[0];
+  const featuredPodcastImage = PlaceHolderImages.find(p => p.id === featuredPodcast.imageId);
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-12">
       {/* Hero Section */}
       <section className="relative h-[60vh] min-h-[400px] w-full flex items-center justify-center text-center">
-        <Image
-          src="/images/hero-banner.png"
-          alt="Banner principal da rádio"
-          fill
-          sizes="100vw"
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="relative z-10 flex flex-col items-start gap-4 px-4 max-w-6xl w-full mx-auto">
-          <div className="border-l-8 border-primary pl-6">
-            <h1 className="font-headline text-4xl md:text-6xl font-bold text-white text-left">
-              OU SIMPLESMENTE
-            </h1>
-            <p className="font-headline text-3xl md:text-5xl text-white/80 text-left">
-              ADICIONE UMA FOTO E
-            </p>
-            <p className="font-headline text-3xl md:text-5xl text-white/80 text-left">
-              ESCREVA SOBRE ELA
-            </p>
-          </div>
+        {heroImage && (
+          <Image
+            src={heroImage.imageUrl}
+            alt={heroImage.description}
+            fill
+            sizes="100vw"
+            className="object-cover"
+            priority
+            data-ai-hint={heroImage.imageHint}
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" />
+        <div className="relative z-10 flex flex-col items-center gap-4 px-4">
+          <h1 className="font-headline text-5xl md:text-7xl font-bold text-primary">Rádio Conectar</h1>
+          <p className="text-xl md:text-2xl font-semibold text-foreground max-w-2xl">
+            Your connection to the world of music. Live streaming, news, charts, and more.
+          </p>
+          <Button size="lg" asChild className="mt-4">
+            <Link href="/schedule">View Schedule</Link>
+          </Button>
         </div>
       </section>
 
-      {/* On Air Section */}
-      <div className="container mx-auto px-4 -mt-20 z-10">
-        <Card className="bg-primary/90 backdrop-blur-sm border-0 text-primary-foreground rounded-none">
-          <CardHeader className="flex-row items-center justify-between p-3">
-              <div className="flex items-center gap-4">
-                <p className="font-headline text-lg uppercase">No Ar:</p>
-                <p className="font-semibold text-lg">Midday Mix with Ana Beatriz</p>
-              </div>
-              <div className="text-right hidden sm:block">
-                  <p className="text-sm opacity-80">A Seguir:</p>
-                  <p className="font-semibold">Afternoon Drive</p>
-              </div>
-          </CardHeader>
-        </Card>
-      </div>
+      {/* Main Content Grid */}
+      <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-8 -mt-24">
+        
+        {/* Left Column */}
+        <div className="lg:col-span-8 space-y-8">
 
-      {/* Latest News Bar */}
-       <div className="container mx-auto px-4 mt-8">
-         <h2 className="text-xl font-bold font-headline border-b-4 border-primary pb-2 mb-4 uppercase">Últimas Noticias</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {latestNews.map((article, index) => (
-                     <Link href="/news" key={article.id} className="group flex flex-col bg-card hover:bg-muted/50 transition-colors rounded-lg overflow-hidden">
-                        <div className="relative w-full h-48 overflow-hidden">
-                            <Image 
-                            src={newsImages[index % newsImages.length]}
-                            alt={article.title}
-                            fill
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                            className="object-cover"
-                            />
-                        </div>
-                       <div className="p-4">
-                            <h3 className="font-semibold group-hover:text-primary transition-colors leading-tight">{article.title}</h3>
-                            <p className="text-sm text-muted-foreground mt-1">{article.date}</p>
-                       </div>
-                    </Link>
-                  )
-                )}
-            </div>
-      </div>
-
-      {/* 3-Column Layout */}
-      <div className="container mx-auto px-4 mt-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
-          {/* Left Column */}
-          <div className="lg:col-span-3 space-y-8">
-            <WidgetContainer title="Peça sua música">
-                <Card className="bg-primary text-primary-foreground p-4 text-center">
-                  <h4 className="font-headline text-2xl">Clique aqui e faça o seu</h4>
-                  <p className="text-lg">Pedido de música</p>
-                </Card>
-            </WidgetContainer>
-             <WidgetContainer title="Galeria de fotos">
-                <div className="grid grid-cols-3 gap-2">
-                    {galleryImages.map((image, index) => (
-                        <Link href="/gallery" key={index}>
-                            <div className="relative aspect-square w-full overflow-hidden rounded-md group border-2 border-transparent hover:border-primary">
-                                <Image
-                                src={image}
-                                alt={`Imagem da galeria ${index + 1}`}
-                                fill
-                                sizes="(max-width: 1024px) 33vw, 10vw"
-                                className="object-cover"
-                                />
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-                 <Button variant="outline" asChild className="mt-4 w-full">
-                  <Link href="/gallery">Ver galeria completa <ArrowRight className="ml-2 h-4 w-4" /></Link>
-                </Button>
-            </WidgetContainer>
-          </div>
-
-          {/* Center Column */}
-          <div className="lg:col-span-6 space-y-8">
-             <WidgetContainer title="Vídeo em destaque">
-                <div className="aspect-video bg-card rounded-lg overflow-hidden">
-                     <iframe src='//www.youtube.com/embed/0KSOMA3QBU0?theme=dark' width='100%' height='100%' frameBorder='0' allowFullScreen></iframe> 
-                </div>
-             </WidgetContainer>
-             <WidgetContainer title="Últimas do blog">
-                <div className="space-y-6">
-                    {latestBlog.map((article, index) => (
-                        <Card key={article.id} className="overflow-hidden group flex flex-col md:flex-row">
-                            <div className="relative aspect-video md:aspect-square w-full md:w-1/3 overflow-hidden">
-                            <Image
-                                src={newsImages[index % newsImages.length]}
-                                alt={article.title}
-                                fill
-                                sizes="(max-width: 768px) 100vw, 33vw"
-                                className="object-cover"
-                            />
-                            </div>
-                            <div className="p-6 flex flex-col justify-center md:w-2/3">
-                                <CardTitle className="text-xl group-hover:text-primary transition-colors">{article.title}</CardTitle>
-                                <CardDescription className="mt-2">{article.date}</CardDescription>
-                                <p className="text-muted-foreground mt-4 text-sm line-clamp-3">{article.content}</p>
-                            </div>
-                        </Card>
-                    ))}
-                </div>
-             </WidgetContainer>
-          </div>
-
-          {/* Right Column */}
-          <div className="lg:col-span-3 space-y-8">
-              <WidgetContainer title="Enquete">
-                <Card>
+          {/* Latest News */}
+          <section>
+            <h2 className="text-3xl font-headline font-bold mb-4 flex items-center gap-3">
+              <Newspaper className="text-primary" />
+              Latest News
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {latestNews.map(article => {
+                const articleImage = PlaceHolderImages.find(p => p.id === article.imageId);
+                return (
+                  <Card key={article.id} className="overflow-hidden flex flex-col group">
+                    {articleImage && (
+                      <div className="relative aspect-video w-full overflow-hidden">
+                        <Image
+                          src={articleImage.imageUrl}
+                          alt={article.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                           data-ai-hint={articleImage.imageHint}
+                        />
+                      </div>
+                    )}
                     <CardHeader>
-                        <CardTitle className="text-lg">Como está o novo site?</CardTitle>
+                      <CardTitle className="text-lg font-semibold group-hover:text-primary transition-colors">{article.title}</CardTitle>
                     </CardHeader>
-                    <CardContent>
-                        <p className="text-muted-foreground">Enquete fechada.</p>
+                    <CardContent className="flex-grow">
+                      <p className="text-muted-foreground text-sm line-clamp-2">{article.content}</p>
                     </CardContent>
-                </Card>
-              </WidgetContainer>
-              <WidgetContainer title="Top 10">
-                <div className="space-y-2">
-                    {topCharts.slice(0,10).map((song) => (
-                         <Card key={song.rank} className="overflow-hidden group">
-                           <div className="flex items-center">
-                              <div className="bg-primary text-primary-foreground p-3 flex items-center justify-center">
-                                <p className="font-headline text-2xl font-bold">{String(song.rank).padStart(2, '0')}</p>
-                              </div>
-                               <div className="p-3">
-                                  <p className="font-semibold leading-tight group-hover:text-primary transition-colors">{song.title}</p>
-                                  <p className="text-sm text-muted-foreground">{song.artist}</p>
-                               </div>
-                           </div>
-                         </Card>
-                    ))}
-                </div>
-              </WidgetContainer>
-          </div>
+                  </Card>
+                )
+              })}
+            </div>
+            <Button variant="outline" asChild className="mt-6">
+              <Link href="/news">Read More News <ArrowRight className="ml-2 h-4 w-4" /></Link>
+            </Button>
+          </section>
+
+           <Separator />
+
+          {/* Music Request Form */}
+          <section>
+             <h2 className="text-3xl font-headline font-bold mb-4 flex items-center gap-3">
+                <Music className="text-primary" />
+                Request a Song
+              </h2>
+            <MusicRequestForm />
+          </section>
+
         </div>
+
+        {/* Right Column (Sidebar) */}
+        <aside className="lg:col-span-4 space-y-8">
+
+          {/* Top 10 Chart */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-2xl font-headline font-bold flex items-center gap-3">
+                <Music className="text-primary" />
+                Top 10 Chart
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-4">
+                {topCharts.slice(0, 5).map(song => (
+                  <li key={song.rank} className="flex items-center gap-4">
+                    <div className="text-2xl font-bold text-primary w-8 text-center">{song.rank}</div>
+                    <div>
+                      <p className="font-semibold leading-tight">{song.title}</p>
+                      <p className="text-sm text-muted-foreground">{song.artist}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <Button variant="outline" asChild className="mt-6 w-full">
+                <Link href="/charts">View Full Chart <ArrowRight className="ml-2 h-4 w-4" /></Link>
+              </Button>
+            </CardContent>
+          </Card>
+          
+          {/* On Air Today */}
+          {todaysSchedule && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-2xl font-headline font-bold">On Air Today</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-3">
+                  {todaysSchedule.shows.slice(0, 3).map(show => (
+                    <li key={show.title}>
+                      <p className="font-semibold">{show.title}</p>
+                      <p className="text-sm text-muted-foreground">{show.time} with {show.host}</p>
+                    </li>
+                  ))}
+                </ul>
+                 <Button variant="outline" asChild className="mt-6 w-full">
+                  <Link href="/schedule">Full Schedule <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Featured Podcast */}
+          {featuredPodcast && featuredPodcastImage && (
+            <Card className="overflow-hidden group">
+               <div className="relative aspect-video w-full overflow-hidden">
+                <Image
+                  src={featuredPodcastImage.imageUrl}
+                  alt={featuredPodcast.title}
+                  fill
+                  sizes="33vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  data-ai-hint={featuredPodcastImage.imageHint}
+                />
+              </div>
+              <CardHeader>
+                <CardTitle className="text-xl font-headline font-bold flex items-center gap-3">
+                  <Mic className="text-primary" />
+                  Featured Podcast
+                </CardTitle>
+                 <p className="font-semibold pt-2 group-hover:text-primary transition-colors">{featuredPodcast.title}</p>
+                 <p className="text-sm text-muted-foreground">{featuredPodcast.date}</p>
+              </CardHeader>
+              <CardContent>
+                <Button variant="default" asChild className="w-full">
+                  <Link href="/podcasts">Listen Now <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+        </aside>
       </div>
+
+       {/* Gallery Preview */}
+      <section className="container mx-auto px-4">
+        <h2 className="text-3xl font-headline font-bold mb-4 flex items-center gap-3">
+            <Users className="text-primary" />
+            From Our Community
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
+            {PlaceHolderImages.filter(p => p.id.startsWith('gallery-')).slice(0,6).map(image => (
+                <Link href="/gallery" key={image.id}>
+                    <div className="relative aspect-square w-full overflow-hidden rounded-lg group">
+                        <Image
+                            src={image.imageUrl}
+                            alt={image.description}
+                            fill
+                            sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 16vw"
+                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                            data-ai-hint={image.imageHint}
+                        />
+                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
+                    </div>
+                </Link>
+            ))}
+        </div>
+      </section>
 
       <footer className="w-full mt-12 py-8 bg-card">
           <div className="container mx-auto text-center text-muted-foreground">
