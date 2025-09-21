@@ -1,9 +1,4 @@
 export const sliderData = [
-  { id: 1, imageId: 'slider1', title: 'Slide 1', link: '#' },
-  { id: 2, imageId: 'slider2', title: 'Slide 2', link: '#' },
-  { id: 3, imageId: 'slider3', title: 'Slide 3', link: '#' },
-];
-export const sliderData = [
   {
     id: 1,
     imageId: "slider-1",
@@ -203,6 +198,11 @@ export const podcasts = [
     id: 6,
     title: "Electronic Echoes",
     host: "Synthwave Sarah",
+    date: "July 17, 2024",
+    description: "A journey through the world of electronic music, from ambient to techno. Featuring guest mixes and artist spotlights.",
+    imageId: "podcast-6"
+  },
+];
     date: "July 17, 2024",
     description: "A journey through the world of electronic music, from ambient to techno. Featuring guest mixes and artist spotlights.",
     imageId: "podcast-6"
