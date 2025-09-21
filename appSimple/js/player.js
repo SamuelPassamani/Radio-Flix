@@ -61,8 +61,8 @@ function renderPlayer() {
       <div class="album-art-container">
         <img src="${songData.albumArtUrl}" alt="Capa do álbum" class="album-art" id="album-art">
         <button class="play-pause-button" id="play-pause-button">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pause-icon"><path d="M6 4h4v16H6z"/><path d="M14 4h4v16h-4z"/></svg>
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" class="play-icon" style="display: none;"><path d="M5 4.5A2.5 2.5 0 0 1 7.5 2h9A2.5 2.5 0 0 1 19 4.5v15a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 19.5v-15Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" class="play-icon" style="display: block;"><path d="M5 4.5A2.5 2.5 0 0 1 7.5 2h9A2.5 2.5 0 0 1 19 4.5v15a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 19.5v-15Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pause-icon" style="display: none;"><path d="M6 4h4v16H6z"/><path d="M14 4h4v16h-4z"/></svg>
         </button>
       </div>
       <div class="song-info">
@@ -177,7 +177,6 @@ function setupPlayerEvents() {
     
     audio.volume = volume / 100;
     updateVolumeIcon();
-    audio.play().catch(e => console.error("Autoplay was prevented:", e));
 }
 
 
@@ -250,3 +249,5 @@ document.addEventListener('DOMContentLoaded', () => {
   updateSongData();
   setInterval(updateSongData, 10000);
 });
+
+    
