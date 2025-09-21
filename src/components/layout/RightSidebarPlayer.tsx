@@ -10,8 +10,7 @@ import { cn } from "@/lib/utils";
 
 // URLs e constantes da API
 const STREAM_URL = "https://stream.zeno.fm/cbzw2rbebfkuv";
-const API_URL = `https://twj.es/free/?url=${STREAM_URL}`;
-const FALLBACK_API_URL = `https://twj.es/metadata/?url=${STREAM_URL}`;
+const API_URL = `/api/stream-info`;
 const DEFAULT_COVER_ART = "/img/cover.png";
 
 interface SongData {
@@ -74,23 +73,25 @@ export function RightSidebarPlayer() {
   const currentSongTitleRef = useRef<string | null>(null);
 
   useEffect(() => {
+    // Tenta dar play automaticamente.
+    // Navegadores podem bloquear isso se o usuário não tiver interagido com a página.
     if (audioRef.current) {
         audioRef.current.play().catch(e => console.error("Autoplay was prevented:", e));
     }
     
-    const fetchStreamingData = async (url: string): Promise<any> => {
+    const fetchStreamingData = async (): Promise<any> => {
       try {
-        const response = await fetch(url);
+        const response = await fetch(API_URL);
         if (!response.ok) return null;
         return await response.json();
       } catch (error) {
-        console.error(`Error fetching streaming data from ${url}:`, error);
+        console.error(`Error fetching streaming data from ${API_URL}:`, error);
         return null;
       }
     };
 
     const updateSongData = async () => {
-      let data = await fetchStreamingData(API_URL) || await fetchStreamingData(FALLBACK_API_URL);
+      let data = await fetchStreamingData();
       if (data) {
         const songTitle = data.songtitle || (typeof data.song === "object" ? data.song.title : data.song) || "Música Desconhecida";
         const artistName = (typeof data.artist === "object" ? data.artist.title : data.artist) || "Artista Desconhecido";
@@ -148,6 +149,7 @@ export function RightSidebarPlayer() {
         preload="auto" 
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
+        autoPlay
       />
       <div
         className="fixed top-0 h-full bg-card/95 backdrop-blur-md border-l border-border transition-all duration-300 z-50 flex flex-col"
