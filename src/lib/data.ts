@@ -1,3 +1,4 @@
+
 export const sliderData = [
   {
     id: 1,
@@ -186,7 +187,7 @@ export const podcasts = [
     description: "Our flagship weekly show, discussing the latest in music news, culture, and what's happening at the station.",
     imageId: "podcast-4"
   },
-    {
+  {
     id: 5,
     title: "Vinyl Vibes",
     host: "Old School Oscar",
@@ -201,10 +202,5 @@ export const podcasts = [
     date: "July 17, 2024",
     description: "A journey through the world of electronic music, from ambient to techno. Featuring guest mixes and artist spotlights.",
     imageId: "podcast-6"
-  },
-];
-    date: "July 17, 2024",
-    description: "A journey through the world of electronic music, from ambient to techno. Featuring guest mixes and artist spotlights.",
-    imageId: "podcast-6"
-  },
+  }
 ];
