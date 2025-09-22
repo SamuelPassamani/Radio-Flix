@@ -3,7 +3,7 @@ main = "worker.js"
 compatibility_date = "2024-06-01"
 
 [site]
-bucket = "./out"
+bucket = "../out"
 entry-point = "."
 
 [build]
